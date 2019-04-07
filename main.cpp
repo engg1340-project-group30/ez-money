@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 
 using namespace std;
 
@@ -60,12 +61,106 @@ void manageBudget(User &user1)
 }
 
 //
+//Function to print menu on accounts screen
+//Input: none
+//Output: Displays the Menu for user to choose from
+void accountsMenu()
+{
+  cout << "\nPlease enter the number next to your preferred option from the menu below.\n\n";
+  cout << "*************************************************" << endl;
+  cout << "0. Exit to Main Menu." << endl;
+  cout << "1. Add a new account." << endl;
+  cout << "2. Delete an existing account." << endl;
+  cout << "3. Edit an existing account." << endl;
+  cout << "*************************************************" << endl;
+}
+
+//
 // Function to manage different accounts and amount remaining from monthly budget
 // Input: structure user1
 // Output: updated structure user1
 void manageAccounts(User &user1)
 {
-  cout << "This is the Accounts feature." << endl;
+  vector <string> accountNames;
+  vector <double> accountBalances;
+  cout << "Welcome to the Manage Accounts Screen.\n";
+  string newAccountName;
+  double newAccountBalance;
+  unsigned int i=0;
+  int userInput, changePos;
+  do
+  {
+    accountsMenu();
+    cin >> userInput;
+    switch(userInput)
+    {
+      case 0: return;
+      case 1:
+        cout << "Please input Account Name : ";
+        cin >> newAccountName;
+        cout << "Please input Initial Account Balance : ";
+        cin >> newAccountBalance;
+        accountNames.push_back(newAccountName);
+        accountBalances.push_back(newAccountBalance);
+        cout << "\nNew Account has been added!\n";
+        break;
+
+      case 2: 
+        if(accountNames.size() == 0)
+        {
+          cout << "Nothing to Delete! Please initialize an Account by choosing option 1 below.\n";
+          break;
+        }
+        else
+        {
+          cout << "Please select the number in the list below next to the account name you would like to Delete.\n";
+          for (i=0 ; i<accountNames.size(); i++)
+          {
+            cout << i+1 << ". " << accountNames[i] <<endl;
+          }
+          cin >> changePos;
+          if(changePos > accountNames.size())
+          {
+            cout << "Input integer does not link to any Account. Please try again!\n";
+            break;
+          }
+          accountNames.erase(accountNames.begin()+changePos-1);
+          accountBalances.erase(accountBalances.begin()+changePos-1);
+          break;
+        }
+      
+      case 3: 
+        if(accountNames.size() == 0)
+        {
+          cout << "Nothing to Edit! Please initialize an Account by choosing option 1 below.\n";
+          break;
+        }
+        else
+        {
+          cout << "Please select the number in the list below next to the account name you would like to Edit.\n";
+          for (i=0 ; i<accountNames.size(); i++)
+          {
+            cout << i+1 << ". " << accountNames[i] <<endl;
+          }
+          cin >> changePos;
+          cout << "Please enter updated Account Name : ";
+          cin >> newAccountName;
+          cout << "Please enter updated Account Balance : ";
+          cin >> newAccountBalance;
+          accountNames[changePos-1] = newAccountName;
+          accountBalances[changePos-1] = newAccountBalance;
+        }
+      default: cout << "Invalid Input! Please choose a number from the Menu below.\n";       
+    }
+    if(accountNames.size() != 0)
+    {
+      cout << "\nStatus of all Accounts is as follows\n";
+    }
+    for (i=0 ; i<accountNames.size(); i++)
+    {
+          cout << i+1 << ". " << accountNames[i] << " HK$" << accountBalances[i] <<endl;
+    }
+  } while (userInput != 0);
 }
 
 //
@@ -94,7 +189,7 @@ void viewStats(User &user1)
 void display_main_menu()
 {
   //system("clear");
-  cout << "\nSelect the number next to your preferred option below.\n\n";
+  cout << "\nPlease select the number next to your preferred option from the menu below.\n\n";
   cout << "*************************************************" << endl;
   cout << "0. Exit." << endl;
   cout << "1. Manage Expense." << endl;
@@ -106,7 +201,6 @@ void display_main_menu()
   cout << "7. Manage Expense Reminders." << endl;
   cout << "8. View Statistics of Previous Expenses." << endl;
   cout << "*************************************************" << endl;
-  
 }
 
 //

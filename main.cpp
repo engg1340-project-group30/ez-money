@@ -5,22 +5,22 @@
 
 using namespace std;
 
-  // standard template of structure which is
-  // used for accounts, expenses, and incomes
-  struct Category
-  {
-    string type;
-    double value;
-  };
+// standard template of structure which is
+// used for accounts, expenses, and incomes
+struct Category
+{
+  vector <string> type;
+  vector <double> value;
+};
 
-  // declare a structure for every user which
-  // contains all the information of one user
-  struct User 
-  {
-    string username;
-    Category accounts, expense, income;
-    double budget;
-  };
+// declare a structure for every user which
+// contains all the information of one user
+struct User 
+{
+  string username;
+  Category accounts, expense, income;
+  double budget;
+};
   
 //
 // Function to manage expense inputs
@@ -69,9 +69,9 @@ void accountsMenu()
   cout << "\nPlease enter the number next to your preferred option from the menu below.\n\n";
   cout << "*************************************************" << endl;
   cout << "0. Exit to Main Menu." << endl;
-  cout << "1. Add a new account." << endl;
-  cout << "2. Delete an existing account." << endl;
-  cout << "3. Edit an existing account." << endl;
+  cout << "1. Create a New Account." << endl;
+  cout << "2. Delete an Existing Account." << endl;
+  cout << "3. Edit an Existing Account." << endl;
   cout << "*************************************************" << endl;
 }
 
@@ -81,8 +81,9 @@ void accountsMenu()
 // Output: updated structure user1
 void manageAccounts(User &user1)
 {
-  vector <string> accountNames;
-  vector <double> accountBalances;
+  vector <string> accountNames = user1.accounts.type;
+  vector <double> accountBalances = user1.accounts.value;
+  cout <<"SIZE:" << user1.accounts.value.size()<<endl;
   cout << "Welcome to the Manage Accounts Screen.\n";
   string newAccountName;
   double newAccountBalance;
@@ -94,7 +95,7 @@ void manageAccounts(User &user1)
     cin >> userInput;
     switch(userInput)
     {
-      case 0: return;
+      case 0: break;
       case 1:
         cout << "Please input Account Name : ";
         cin >> newAccountName;
@@ -102,14 +103,13 @@ void manageAccounts(User &user1)
         cin >> newAccountBalance;
         accountNames.push_back(newAccountName);
         accountBalances.push_back(newAccountBalance);
-        cout << "\nNew Account has been added!\n";
+        cout << "\nNew Account has been created!\n";
         break;
 
       case 2: 
         if(accountNames.size() == 0)
         {
-          cout << "Nothing to Delete! Please initialize an Account by choosing option 1 below.\n";
-          break;
+          cout << "Nothing to Delete!\n";
         }
         else
         {
@@ -118,6 +118,7 @@ void manageAccounts(User &user1)
           {
             cout << i+1 << ". " << accountNames[i] <<endl;
           }
+          cout << i+1 << ". Exit to previous screen." << endl;
           cin >> changePos;
           if(changePos > accountNames.size())
           {
@@ -126,14 +127,13 @@ void manageAccounts(User &user1)
           }
           accountNames.erase(accountNames.begin()+changePos-1);
           accountBalances.erase(accountBalances.begin()+changePos-1);
-          break;
         }
-      
+        break;
+
       case 3: 
         if(accountNames.size() == 0)
         {
-          cout << "Nothing to Edit! Please initialize an Account by choosing option 1 below.\n";
-          break;
+          cout << "Nothing to Edit!\n";
         }
         else
         {
@@ -150,17 +150,26 @@ void manageAccounts(User &user1)
           accountNames[changePos-1] = newAccountName;
           accountBalances[changePos-1] = newAccountBalance;
         }
+        break;
+
       default: cout << "Invalid Input! Please choose a number from the Menu below.\n";       
     }
     if(accountNames.size() != 0)
     {
       cout << "\nStatus of all Accounts is as follows\n";
     }
+    else
+    {
+      cout << "No Accounts to Display! Please Create an Account by entering 1 below.";
+    }
+    
     for (i=0 ; i<accountNames.size(); i++)
     {
           cout << i+1 << ". " << accountNames[i] << " HK$" << accountBalances[i] <<endl;
     }
   } while (userInput != 0);
+    user1.accounts.type = accountNames;
+    user1.accounts.value = accountBalances;
 }
 
 //
@@ -208,12 +217,11 @@ void display_main_menu()
 // Input: User choice in Main Menu
 // Output: Depends on choice
 // Call functions based on user input 
-void coordinate_input(int choice, User user1)
+void coordinate_input(int choice, User &user1)
 {
   switch(choice)
   {
     case 0: cout << "Thank you for using the system.\nUntil next time! :)" << endl;
-            exit(1);
     break;
     case 1: manageExpense(user1);
     break;
@@ -257,9 +265,7 @@ int main()
     coordinate_input(choice, user1);
     
     
-  } while(true);
-
-
+  } while(choice != 0);
 
   return 0;
 }

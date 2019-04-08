@@ -83,7 +83,6 @@ void manageAccounts(User &user1)
 {
   vector <string> accountNames = user1.accounts.type;
   vector <double> accountBalances = user1.accounts.value;
-  cout <<"SIZE:" << user1.accounts.value.size()<<endl;
   cout << "Welcome to the Manage Accounts Screen.\n";
   string newAccountName;
   double newAccountBalance;
@@ -178,7 +177,38 @@ void manageAccounts(User &user1)
 // Output: updated structure user1
 void transferAmount(User &user1)
 {
+  int i;
   cout << "This is the Transfer amount feature." << endl;
+  if(user1.accounts.value.size() < 2)
+  {
+    cout << "You need at least 2 accounts to use the Transfer feature!\n";
+    cout << "Please Create Accounts from Option 5 on the Main Menu below.\n"; 
+    return;
+  }
+  else
+  {
+    int fromAccount, toAccount;
+    double transferAmount;
+    cout << "\nCurrent Accounts Status\n";
+    for (i=0 ; i<user1.accounts.value.size(); i++)
+    {
+      cout << i+1 << ". " << user1.accounts.type[i] << " HK$" << user1.accounts.value[i] <<endl;
+    }
+    cout << "\nTranfer FROM (Enter number from list above) : ";
+    cin >> fromAccount;
+    cout << "\nTransfer TO (Enter number from list above) : ";
+    cin >> toAccount;
+    cout << "\nTransaction amount = HK$";
+    cin >> transferAmount;
+    user1.accounts.value[fromAccount-1] -= transferAmount;
+    user1.accounts.value[toAccount-1] += transferAmount;
+  }
+  cout << "Transfer Successful!\n";
+  cout << "\nCurrent Accounts Status\n";
+  for (i=0 ; i<user1.accounts.value.size(); i++)
+  {
+      cout << i+1 << ". " << user1.accounts.type[i] << " HK$" << user1.accounts.value[i] <<endl;
+  }
 }
 
 //

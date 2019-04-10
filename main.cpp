@@ -5,8 +5,8 @@
 
 using namespace std;
 
-// standard template of structure which is
-// used for accounts, expenses, and incomes
+// standard template of string and double type vectors which
+// are used for accounts, expenses, and incomes
 struct Category
 {
   vector <string> type;
@@ -178,7 +178,6 @@ void manageAccounts(User &user1)
 void transferAmount(User &user1)
 {
   int i;
-  cout << "This is the Transfer amount feature." << endl;
   if(user1.accounts.value.size() < 2)
   {
     cout << "You need at least 2 accounts to use the Transfer feature!\n";

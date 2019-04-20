@@ -18,7 +18,6 @@ class User
     void expenseMenu();
     void manageExpense();
     void incomeMenu();
-    void incomeSourceMenu();
     void manageIncome();
     void viewRecords();
     void manageBudget();

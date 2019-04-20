@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <cmath>
 #include "User.h"
 using namespace std;
 
@@ -24,17 +26,22 @@ void User::expenseMenu()
 //         Conditional Alerts
 void User::manageExpense()
 {
-  cout << "Welcome to the Manage Expense screen.\n" << endl;
-  vector <string> categoryName = expense.type;
-  vector <double> categoryExpense = expense.value;
+  cout << "\nWelcome to the Manage Expense screen.\n" << endl;
   string newCategory;
   double newExpense;
   int userInput, userChoice, accountChoice;
+  double sum=0;
   unsigned int i=0;
-  //string category[] = {"Food", "Travel", "Shopping", "Bill payment", "Miscellaneous"};
-  cout << "\nPlease select an account to deduct expense from.\n";
-  for(i=0; i<accounts.type.size(); i++){
-    cout << i+1 << ". " <<  accounts.type[i] << " HK$" << accounts.value[i] << endl;
+  bool append = false;
+  if(accounts.type.size()==0){
+    cout << "No Accounts found! Please create an account using 5 on the previous menu.";
+    return;
+  }
+  else{
+    cout << "\nPlease select an account to deduct expense from.\n";
+    for(i=0; i<accounts.type.size(); i++){
+      cout << i+1 << ". " <<  accounts.type[i] << " HK$" << accounts.value[i] << endl;
+    }
   }
   cin >> accountChoice;
   do
@@ -45,69 +52,106 @@ void User::manageExpense()
     {
       case 0 : break;
       case 1 :
-        cout << "Please enter a suitable category for the expense : ";
-        //expenseCategoryMenu();
+        cout << "Please enter a suitable expense type/category : ";
         cin >> newCategory;
-        /*switch(newCategory){
-          case 0: return;
-          case 1: 
-            cout << "Please enter the expense incurred : ";
-            cin >> newExpense;
-        }*/
         cout << "Please enter the expense incurred : ";
         cin >> newExpense;
-        categoryName.push_back(newCategory);
-        categoryExpense.push_back(newExpense);
-        cout << "\nNew expense has been added!\n";
-        accounts.value[accountChoice-1] -= newExpense;
+        if(newExpense > accounts.value[accountChoice-1]){
+          cout << "\nNot sufficient balance in account! Try again.\n";
+        }
+        else{
+          for(i=0; i<expense.type.size(); i++){
+            if(newCategory==expense.type[i]){
+              expense.value[i] += newExpense;
+              append=true;
+            }
+          }
+          if(append==false){
+            expense.type.push_back(newCategory);
+            expense.value.push_back(newExpense);
+          }
+          
+
+          for(i=0; i<expense.type.size(); i++){
+            sum+=expense.value[i];
+          }
+        
+          if(budget-sum ==0){
+            cout << "\nBudget limit reached!" << endl;
+          }
+          else if(budget-sum < 0){
+            cout << "\nAlert! Budget has been exceeded by HK$" << sum-budget << endl; 
+          }
+          
+          cout << "\nNew expense has been added!\n";
+          accounts.value[accountChoice-1] -= newExpense;
+          sum=0;
+        }
         break;
 
       case 2:
-        if(categoryName.size() == 0){
+        if(expense.type.size() == 0){
           cout << "No expense added!\n";
           }
         else{
           cout << "Please select the number corresponding to the expense you would like to edit.\n";
-          for(i=0; i<categoryName.size(); i++){
-            cout << i+1 << ". " << categoryName[i] << " HK$ " << categoryExpense[i] << endl;
+          for(i=0; i<expense.type.size(); i++){
+            cout << i+1 << ". " << expense.type[i] << " HK$" << expense.value[i] << endl;
           }
-          cout << i+1 << ". Exit to previous screen." << endl;
+          
           cin >> userChoice;
-          if(userChoice > categoryName.size())
+          if(userChoice > expense.type.size())
           {
             cout << "Input integer does not link to any expense incurred. Try again!\n";
             break;
           }
-          accounts.value[accountChoice-1] += categoryExpense[userChoice-1];
+          accounts.value[accountChoice-1] += expense.value[userChoice-1];
           cout << "Please enter updated Expense Category : ";
           cin >> newCategory;
           cout << "Please enter updated expense : ";
           cin >> newExpense;
-          categoryName[userChoice-1] = newCategory;
-          categoryExpense[userChoice-1] = newExpense;
+          if(newExpense > accounts.value[accountChoice-1]){
+            cout << "\nNot sufficient balance in account! Try again.\n";
+          }
+          else{
+            sum=newExpense;
+            if(expense.type.size() >0){
+              for(i=1; i<expense.type.size(); i++){
+                sum+=expense.value[i];
+              }
+            }
+            if(budget-sum ==0){
+              cout << "\nBudget limit reached!" << endl;
+            }
+            else if(budget-sum < 0){
+              cout << "Alert! Budget has been exceeded by HK$" << abs(budget-newExpense) << endl; 
+            }
+            expense.type[userChoice-1] = newCategory;
+            expense.value[userChoice-1] = newExpense;
+          }
         }
         accounts.value[accountChoice-1] -= newExpense;
         break;
 
         case 3:
-          if(categoryName.size() == 0){
+          if(expense.type.size() == 0){
           cout << "No expense to delete!\n";
           }
         else{
           cout << "Please select the number corresponding to the expense you would like to delete.\n";
-          for(i =0; i<categoryName.size(); i++){
-            cout << i+1 << ". " << categoryName[i] << " HK$ " << categoryExpense[i] << endl;
+          for(i =0; i<expense.type.size(); i++){
+            cout << i+1 << ". " << expense.type[i] << " HK$" << expense.value[i] << endl;
           }
           cout << i+1 << ". Exit to previous screen." << endl;
           cin >> userChoice;
-          if(userChoice > categoryName.size())
+          if(userChoice > expense.type.size())
           {
             cout << "Input integer does not link to any expense incurred. Try again!\n";
             break;
           }
-          accounts.value[accountChoice-1] += categoryExpense[userChoice-1];
-          categoryName.erase(categoryName.begin()+userChoice-1);
-          categoryExpense.erase(categoryExpense.begin()+userChoice-1);
+          accounts.value[accountChoice-1] += expense.value[userChoice-1];
+          expense.type.erase(expense.type.begin()+userChoice-1);
+          expense.value.erase(expense.value.begin()+userChoice-1);
         }
         break;
 
@@ -115,19 +159,14 @@ void User::manageExpense()
     
     }
 
-    if(categoryName.size()!=0){
+    if(expense.type.size()!=0){
       cout << "\nStatus of all expenses is as follows\n";
     }
-    /*else{
-      cout << "No expense added!";
-    }*/
 
-    for(i=0; i<categoryName.size(); i++){
-      cout << i+1 << ". " << categoryName[i] << " HK$ " << categoryExpense[i] << endl;
+    for(i=0; i<expense.type.size(); i++){
+      cout << i+1 << ". " << expense.type[i] << " HK$" << expense.value[i] << endl;
     }
   } while (userInput!=0);
-  expense.type = categoryName;
-  expense.value = categoryExpense;
 }
 
 //Function to provide user with choice of action in the income feature
@@ -144,20 +183,6 @@ void User::incomeMenu()
   cout << "*************************************************" << endl;
 }
 
-//Function to display income source menu
-//Input: none
-//Output: Income source menu for the user to choose from
-void User::incomeSourceMenu()
-{
-  cout << "*************************************************" << endl;
-  cout << "0. Exit to Income Menu." << endl;
-  cout << "1. Compensation of employment" << endl;
-  cout << "2. Interest/Share/Bond" << endl;
-  cout << "3. Lottery/Windfall gains" << endl;
-  cout << "4. Others" << endl;
-  cout << "*************************************************" << endl;
-}
-
 //
 // Function to manage income inputs
 // Input: structure user1
@@ -165,11 +190,22 @@ void User::incomeSourceMenu()
 void User::manageIncome()
 {
   cout << "Welcome to the Income screen.\n";
-  vector <double> incomeAmount = income.value;
-  vector <string> incomeSource = income.type;
   double newIncome;
+  string newSource;
   unsigned int i=0;
-  int userInput, choice, sourceChoice;
+  int userInput, choice, accountChoice;
+  bool append = false;
+  if(accounts.type.size()==0){
+    cout << "No Accounts found! Please create an account using 5 on the previous menu.";
+    return;
+  }
+  else{
+    cout << "\nPlease select an account to add Income to.\n";
+    for(i=0; i<accounts.type.size(); i++){
+      cout << i+1 << ". " <<  accounts.type[i] << " HK$" << accounts.value[i] << endl;
+    }
+  }
+  cin >> accountChoice;
   do
   {
     incomeMenu();
@@ -178,107 +214,87 @@ void User::manageIncome()
     {
       case 0: break;
       case 1: 
-        cout << "Please choose the Income source from the menu below : " << endl;
-        incomeSourceMenu();
-        cin >> sourceChoice;
+        cout << "Please enter suitable Income source : " ;
+        cin >> newSource;
         cout << "Please input amount : ";
         cin >> newIncome;
-        switch(sourceChoice)
-        {
-          case 0: break;
-          case 1:
-            incomeSource.push_back("Compensation of employment");
-            incomeAmount.push_back(newIncome);
-            break;
-          case 2:
-            incomeSource.push_back("Interest/Share/Bond");
-            incomeAmount.push_back(newIncome);
-            break;
-          case 3:
-            incomeSource.push_back("Lottery/Windfall gains");
-            incomeAmount.push_back(newIncome);
-            break;
-          case 4:
-            incomeSource.push_back("Others");
-            incomeAmount.push_back(newIncome);
-            break;
+        
+        for(i=0; i<income.type.size(); i++){
+          if(newSource==income.type[i]){
+            income.value[i]+=newIncome;
+            append=true;
+            
+          }
         }
+        if(append==false){
+          income.type.push_back(newSource);
+          income.value.push_back(newIncome);
+        }
+        cout << "\nNew Income has been added!\n";
+        accounts.value[accountChoice-1] += newIncome;
         break;
 
       case 2:
-        if(incomeSource.size() == 0){
-          cout << "Nothing to edit!\n";
+        if(income.type.size() == 0){
+          cout << "No income added!\n";
         }
         else{
           cout << "Please select the number corresponding to the income you would like to edit.\n";
-          for(i=0; i<incomeSource.size(); i++){
-            cout << i+1 << ". " << incomeSource[i] << " HK$" << incomeAmount[i]<< endl;
-          }
-          cin >> choice;
-          cout << "Please choose the updated Income source from the menu below : " << endl;
-          incomeSourceMenu();
-          cin >> sourceChoice;
-          cout << "Please input amount : ";
-          cin >> newIncome;
-          switch(sourceChoice){
-            case 0 : break;
-            case 1:
-              incomeSource[choice-1] = "Compensation of employment";
-              incomeAmount[choice-1] = newIncome;
-              break;
-            case 2:
-              incomeSource[choice-1] = "Interest/Share/Bond";
-              incomeAmount[choice-1] = newIncome;
-              break;
-            case 3:
-              incomeSource[choice-1] = "Lottery/Windfall gains";
-              incomeAmount[choice-1] = newIncome;
-              break;
-            case 4:
-              incomeSource[choice-1] = "Others";
-              incomeAmount[choice-1] = newIncome;
-              break;
+          for(i=0; i<income.type.size(); i++){
+            cout << i+1 << ". " << income.type[i] << " HK$" << income.value[i]<< endl;
           }
           
+          cin >> choice;
+          if(choice > income.type.size()){
+            cout << "Input integer does not link to any income. Try again!\n";
+            break;
+          }
+          accounts.value[accountChoice-1] -= income.value[choice-1];
+          cout << "Please enter updated Income Source : ";
+          cin >> newSource;
+          cout << "Please enter updated Income Amount : ";
+          cin >> newIncome;
+          income.type[choice-1] = newSource;
+          income.value[choice -1] = newIncome;
         }
+        accounts.value[accountChoice-1] += newIncome;
         break;
       
       case 3 :
-        if(incomeSource.size()== 0){
+        if(income.type.size()== 0){
           cout << "Nothing to delete!\n";
         }
         else {
           cout << "Please select the number corresponding to the income you would like to delete.\n";
-          for(i=0; i<incomeSource.size(); i++){
-            cout << i+1 << ". " << incomeSource[i] << " HK$" << incomeAmount[i]<< endl;
+          for(i=0; i<income.type.size(); i++){
+            cout << i+1 << ". " << income.type[i] << " HK$" << income.value[i]<< endl;
           }
           cout << i+1 << ". Exit to previous screen." << endl;
           cin >> choice;
-          if(choice>incomeSource.size()){
-            cout << "Invalid input. Please try again!\n";
+          if(choice>income.type.size()){
+            cout << "Input integer does not link to any Income. Try again!\n";
             break;
           }
-          incomeSource.erase(incomeSource.begin()+choice-1);
-          incomeAmount.erase(incomeAmount.begin()+choice-1);
+          accounts.value[accountChoice-1] -= income.value[choice-1];
+          income.type.erase(income.type.begin()+choice-1);
+          income.value.erase(income.value.begin()+choice-1);
         }
         break;
 
         default: cout << "Invalid Input! Please choose a number from the Menu below. \n ";
     }
 
-    if(incomeSource.size()!=0){
+    if(income.type.size()!=0){
       cout << "\nStatus of all Income Sources is as follows\n";
     }        
     else{
       cout << "No income record to display! Please create a new record by entering 1 below.";
     }
 
-    for(i=0; i<incomeSource.size(); i++){
-      cout << i+1 << ". " << incomeSource[i] << " HK$" << incomeAmount[i] << endl;
+    for(i=0; i<income.type.size(); i++){
+      cout << i+1 << ". " << income.type[i] << " HK$" << income.value[i] << endl;
     }
   } while (userInput!=0);
-  income.type = incomeSource;
-  income.value = incomeAmount;
 }
 
 //
@@ -290,6 +306,18 @@ void User::viewRecords()
   cout << "This is the view records feature."<< endl;
 }
 
+//Function to print Budget Menu on the screen
+//Input: none
+//Output: Displays the Menu for user to choose from
+void BudgetMenu(){
+  cout << "\nPlease enter the number next to your preferred option from the menu below.\n\n";
+  cout << "*************************************************" << endl;
+  cout << "0. Exit to Main Menu." << endl;
+  cout << "1. Create a New Budget." << endl;
+  cout << "2. Check Remaining Budget." << endl;
+  cout << "*************************************************" << endl;
+}
+
 //
 // Function to set and edit budget
 // Input: structure user1
@@ -297,11 +325,34 @@ void User::viewRecords()
 void User::manageBudget()
 {
   cout << "Welcome to the Manage Budget screen.\n" << endl;
-  double newBudget = budget;
-  cout << "Please enter the amount: ";
-  cin >> newBudget;
-  cout << "\nNew budget has been set!\n";
-  cout << "\nBudget limit has been set to: HK$ " << newBudget << endl;
+  int userInput;
+  unsigned int i=0;
+  double sum =0;
+  do{
+    BudgetMenu();
+    cin >> userInput;
+    switch (userInput)
+    {
+      case 0: break;
+      case 1:
+        cout << "Please enter new Budget Amount : ";
+        cin >> budget;
+        cout << "\nBudget limit has been set to : HK$" << budget << endl;
+        break;
+      
+      case 2: 
+        for(i=0; i<expense.type.size(); i++){
+          sum+=expense.value[i];
+        }
+        cout << "Total amount spent : HK$" << sum << endl;
+        cout << "Budget left : HK$" << budget-sum << endl;
+        cout << "% of Budget left : " << sum/budget*100  << "%" << endl; 
+        sum=0;
+        break;
+    
+      default: cout << "Invalid Input! Please choose a number from the Menu below.\n";
+    }
+  } while(userInput!=0);
 }
 
 //

@@ -64,14 +64,15 @@ void User::manageExpense()
             if(newCategory==expense.type[i]){
               expense.value[i] += newExpense;
               append=true;
+              break;
             }
+            append=false;
           }
           if(append==false){
             expense.type.push_back(newCategory);
             expense.value.push_back(newExpense);
           }
           
-
           for(i=0; i<expense.type.size(); i++){
             sum+=expense.value[i];
           }
@@ -223,8 +224,9 @@ void User::manageIncome()
           if(newSource==income.type[i]){
             income.value[i]+=newIncome;
             append=true;
-            
+            break;
           }
+          append=false;
         }
         if(append==false){
           income.type.push_back(newSource);

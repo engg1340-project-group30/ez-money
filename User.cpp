@@ -1,8 +1,96 @@
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <sstream>
 #include <cmath>
 #include "User.h"
 using namespace std;
+
+//
+//Function to load values from username.txt into currentUser object
+void User::readFromFile()
+{
+  string word, line;
+  double value;
+  ifstream fin;
+  fin.open((username+".txt").c_str());
+  fin>>budget;
+  fin.ignore();
+
+  getline(fin, line);
+  
+  while(stringstream(line)>>word){
+    cout<<"WORD$$"<<word;
+    accounts.type.push_back(word);
+  }
+  getline(fin, line);
+  while(stringstream(line)>>value){
+    accounts.value.push_back(value);
+  }
+
+  // getline(fin, line);
+  // entry>>line;
+  // while(entry>>word){
+  //   expense.type.push_back(word);
+  // }
+  // getline(fin, line);
+  // entry>>line;
+  // while(entry>>value){
+  //   expense.value.push_back(value);
+  // }
+
+  // getline(fin, line);
+  // entry>>line;
+  // while(entry>>word){
+  //   income.type.push_back(word);
+  // }
+  // getline(fin, line);
+  // entry>>line;
+  // while(entry>>value){
+  //   income.value.push_back(value);
+  // }
+
+  fin.close();
+  for(int i=0;i<accounts.type.size();i++)
+  {
+    cout<<"!!!!!!!!!!!!!!"<<accounts.type[i]<<accounts.value[i]<<endl;
+  }
+}
+
+//
+//Function to write updated entries from currentUser object into username.txt
+void User::writeToFile()
+{
+  ofstream fout;
+  fout.open((username+".txt").c_str());
+  fout << budget << "\n";
+  for(int i=0; i<accounts.type.size(); i++){
+    fout << accounts.type[i] << " ";
+  }
+  fout << endl;
+  for(int i=0; i<accounts.value.size(); i++){
+    fout << accounts.value[i] << " ";
+  }
+  fout << endl;
+
+  for(int i=0; i<expense.type.size(); i++){
+    fout << expense.type[i] << " ";
+  }
+  fout << endl;
+  for(int i=0; i<expense.value.size(); i++){
+    fout << expense.value[i] << " ";
+  }
+  fout << endl;
+
+  for(int i=0; i<income.type.size(); i++){
+    fout << income.type[i] << " ";
+  }
+  fout << endl;
+  for(int i=0; i<income.value.size(); i++){
+    fout << income.value[i] << " ";
+  }
+  fout << endl;
+}
 
 //Function to provide user with choice of action in the expense feature
 //Input: none
@@ -329,7 +417,7 @@ void User::manageBudget()
   cout << "Welcome to the Manage Budget screen.\n" << endl;
   int userInput;
   unsigned int i=0;
-  double sum =0;
+  double sum=0;
   do{
     BudgetMenu();
     cin >> userInput;

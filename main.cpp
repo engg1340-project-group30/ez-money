@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <fstream>
 #include "User.h"
 using namespace std;
 
@@ -13,9 +15,6 @@ void loginScreen()
 
 int main()
 {
-  //Create a vector to store objects for each user
-  vector <User> users;
-
   User currentUser;
   int createUser, choice;
   string name;
@@ -25,17 +24,25 @@ int main()
   cin.ignore();
   getline(cin, name);
   bool userExists= false;
+  vector <string> usernames; // vector to store usernames
+  string username="";
+  ofstream fout;
+  ifstream fin;
+  fin.open("usernames.txt");
+  while(getline(fin,username)){
+  usernames.push_back(username);
+  }
+  fin.close();
   switch(createUser)
   {
     case 1: 
-      for(int i=0; i<users.size(); i++)
+      for(int i=0;i<usernames.size();i++)
       {
-        if(name == users[i].username)
-        {
-          currentUser = users[i];
-          userExists= true;
+        if(usernames[i]==name){
+          userExists=true;
+          currentUser.username = name;
         }
-      } 
+      }
       if(!userExists)
       {
         cout << "Username does not exist. Please Sign Up first.\n";
@@ -44,10 +51,9 @@ int main()
     break;
 
     case 2:
-      users.push_back(currentUser);
-      for(int i=0;i<users.size();i++)
+      for(int i=0;i<usernames.size();i++)
       {
-        if(name == users[i].username)
+        if(name == usernames[i])
         {
           cout << "Username already exists! Please try another one.\n";
           i=0;
@@ -55,6 +61,7 @@ int main()
         }
       }
       currentUser.username = name;
+      usernames.push_back(name);
     break;
 
     case 3:
@@ -63,6 +70,15 @@ int main()
 
     default: cout << "Invalid Input! Please try again." <<endl;   
   }
+  // write updated username file
+  fout.open("usernames.txt");
+  for(int i=0; i<usernames.size(); i++){
+    fout << usernames[i] << "\n";
+  }
+  fout.close();
+
+  // load values into currentUser object
+  currentUser.readFromFile();
 
   cout << "\nHello, " << currentUser.username << "!" << endl;
 
@@ -75,5 +91,8 @@ int main()
     currentUser.coordinate_input(choice);
   } while(choice != 0);
 
+  // write updated entries to file
+  currentUser.writeToFile();
+  
   return 0;
 }

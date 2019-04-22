@@ -15,6 +15,8 @@ struct Category
 class User
 {
   public:
+    void readFromFile();
+    void writeToFile();
     void expenseMenu();
     void manageExpense();
     void incomeMenu();
@@ -31,7 +33,7 @@ class User
 
   //protected: 
     string username;
-    double budget;
+    double budget=0.0;
     Category accounts, expense, income;
 };
 

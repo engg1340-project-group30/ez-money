@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <sstream>
 #include <cmath>
 #include "User.h"
 using namespace std;
@@ -10,51 +9,88 @@ using namespace std;
 //Function to load values from username.txt into currentUser object
 void User::readFromFile()
 {
+  int pos = 0;
   string word, line;
   double value;
   ifstream fin;
   fin.open((username+".txt").c_str());
-  fin>>budget;
+  if(fin.fail())
+  {
+    cout << "Failed to open " << username << ".txt" << endl;
+    return;
+  }
+  fin >> budget;
   fin.ignore();
 
+  pos = 0;
   getline(fin, line);
-  
-  while(stringstream(line)>>word){
-    cout<<"WORD$$"<<word;
-    accounts.type.push_back(word);
-  }
-  getline(fin, line);
-  while(stringstream(line)>>value){
-    accounts.value.push_back(value);
-  }
-
-  // getline(fin, line);
-  // entry>>line;
-  // while(entry>>word){
-  //   expense.type.push_back(word);
-  // }
-  // getline(fin, line);
-  // entry>>line;
-  // while(entry>>value){
-  //   expense.value.push_back(value);
-  // }
-
-  // getline(fin, line);
-  // entry>>line;
-  // while(entry>>word){
-  //   income.type.push_back(word);
-  // }
-  // getline(fin, line);
-  // entry>>line;
-  // while(entry>>value){
-  //   income.value.push_back(value);
-  // }
-
-  fin.close();
-  for(int i=0;i<accounts.type.size();i++)
+  for(int i=0; i<line.length(); i++)
   {
-    cout<<"!!!!!!!!!!!!!!"<<accounts.type[i]<<accounts.value[i]<<endl;
+    if(line[i] == ' ')
+    {
+      word = line.substr(pos, (i-pos) );
+      accounts.type.push_back(word);
+      pos = i+1;
+    }
   }
+  pos = 0;
+  getline(fin, line);
+  for(int i=0; i<line.length(); i++)
+  {
+    if(line[i] == ' ')
+    {
+      word = line.substr(pos, (i-pos) );
+      accounts.value.push_back( stof(word) );
+      pos = i+1;
+    }
+  }
+
+  pos = 0;
+  getline(fin, line);
+  for(int i=0; i<line.length(); i++)
+  {
+    if(line[i] == ' ')
+    {
+      word = line.substr(pos, (i-pos) );
+      expense.type.push_back(word);
+      pos = i+1;
+    }
+  }
+  pos = 0;
+  getline(fin, line);
+  for(int i=0; i<line.length(); i++)
+  {
+    if(line[i] == ' ')
+    {
+      word = line.substr(pos, (i-pos) );
+      expense.value.push_back( stof(word) );
+      pos = i+1;
+    }
+  }
+
+  pos = 0;
+  getline(fin, line);
+  for(int i=0; i<line.length(); i++)
+  {
+    if(line[i] == ' ')
+    {
+      word = line.substr(pos, (i-pos) );
+      income.type.push_back(word);
+      pos = i+1;
+    }
+  }
+  pos = 0;
+  getline(fin, line);
+  for(int i=0; i<line.length(); i++)
+  {
+    if(line[i] == ' ')
+    {
+      word = line.substr(pos, (i-pos) );
+      income.value.push_back( stof(word) );
+      pos = i+1;
+    }
+  }
+  fin.close();
 }
 
 //

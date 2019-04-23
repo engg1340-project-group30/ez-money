@@ -17,30 +17,35 @@ int main()
 {
   User currentUser;
   int createUser, choice;
-  string name;
+  string name, username = "";
   loginScreen();
   cin >> createUser;
-  cout << "Please type your username and press Enter or Return : ";
-  cin.ignore();
-  getline(cin, name);
-  bool userExists= false;
+  if(createUser != 3)
+  {
+    cout << "Please type your username and press Enter or Return : ";
+    cin.ignore();
+    getline(cin, name);
+  }  
+  bool userExists = false;
   vector <string> usernames; // vector to store usernames
-  string username="";
   ofstream fout;
   ifstream fin;
-  fin.open("usernames.txt");
-  while(getline(fin,username)){
-  usernames.push_back(username);
+  fin.open("usernames.txt"); 
+  while(getline(fin, username))
+  {
+    usernames.push_back(username);
   }
   fin.close();
   switch(createUser)
   {
     case 1: 
-      for(int i=0;i<usernames.size();i++)
+      for(int i=0; i<usernames.size(); i++)
       {
-        if(usernames[i]==name){
-          userExists=true;
+        if(usernames[i] == name)
+        {
+          userExists = true;
           currentUser.username = name;
+          break;
         }
       }
       if(!userExists)
@@ -51,13 +56,13 @@ int main()
     break;
 
     case 2:
-      for(int i=0;i<usernames.size();i++)
+      for(int i=0; i<usernames.size(); i++)
       {
         if(name == usernames[i])
         {
           cout << "Username already exists! Please try another one.\n";
-          i=0;
-          getline(cin,name);
+          i = -1;
+          getline(cin, name);
         }
       }
       currentUser.username = name;
@@ -72,6 +77,11 @@ int main()
   }
   // write updated username file
   fout.open("usernames.txt");
+  if(fout.fail())
+  {
+    cout << "Could not open usernames.txt\n";
+    return 1;
+  }
   for(int i=0; i<usernames.size(); i++){
     fout << usernames[i] << "\n";
   }
@@ -93,6 +103,5 @@ int main()
 
   // write updated entries to file
   currentUser.writeToFile();
-  
   return 0;
 }

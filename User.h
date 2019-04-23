@@ -31,9 +31,8 @@ class User
     void display_main_menu();
     void coordinate_input(int);
 
-  //protected: 
     string username;
-    double budget=0.0;
+    double budget;
     Category accounts, expense, income;
 };
 

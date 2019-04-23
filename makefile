@@ -1,7 +1,7 @@
-User.o: User.cpp
+User.o: User.cpp User.h
 	g++ -c User.cpp
 
-main.o: main.cpp
+main.o: main.cpp User.h
 	g++ -c main.cpp
 
 main: main.o User.o

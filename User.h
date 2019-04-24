@@ -21,10 +21,11 @@ class User
     void manageExpense();
     void incomeMenu();
     void manageIncome();
+    void viewRecordsMenu();
     void viewRecords();
     void manageBudget();
     void accountsMenu();
-    void display_accounts_status(vector<string> , vector<double>);
+    void display_accounts_status();
     void manageAccounts();
     void transferAmount();
     void viewStats();

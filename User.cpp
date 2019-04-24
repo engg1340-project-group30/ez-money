@@ -424,12 +424,38 @@ void User::manageIncome()
 }
 
 //
+// Function to display Menu for View Records Feature
+void User::viewRecordsMenu()
+{
+  cout << "\nPlease enter the number next to your preferred option from the menu below.\n\n";
+  cout << "0. Exit to Main Menu." << endl;
+  cout << "1. View Expense Records." << endl;
+  cout << "2. View Income Records." << endl;
+  cout << "3. View Current Accounts Status." << endl;
+  cout << "4. View Budget Status." << endl;
+}
+
+//
 // Function to view records with filters
 // Input: structure user1
 // Output: user's choice of records
 void User::viewRecords()
 {
-  cout << "This is the view records feature."<< endl;
+  int choice; 
+  viewRecordsMenu();
+  cin >> choice;
+  switch(choice)
+  {
+    case 0: return;
+    case 1: 
+      break;
+    case 2:
+      break;
+    case 3: display_accounts_status();
+      break;
+     default: 
+      cout << "Invalid Input! Please try again!";     
+  }
 }
 
 //Function to print Budget Menu on the screen
@@ -497,9 +523,9 @@ void User::accountsMenu()
   cout << "*************************************************" << endl;
 }
 
-void User::display_accounts_status(vector<string> accountNames, vector<double> accountBalances)
+void User::display_accounts_status()
 {
-  if(accountNames.size() != 0)
+  if(accounts.type.size() != 0)
   {
     cout << "\nStatus of all Accounts is as follows\n";
   }
@@ -508,8 +534,8 @@ void User::display_accounts_status(vector<string> accountNames, vector<double> a
     cout << "No Accounts to Display! Please Create an Account by entering 1 below.";
   }
     
-  for (int i=0 ; i<accountNames.size(); i++)
-    cout << i+1 << ". " << accountNames[i] << " HK$" << accountBalances[i] <<endl;
+  for (int i=0 ; i<accounts.type.size(); i++)
+    cout << i+1 << ". " << accounts.type[i] << " HK$" << accounts.value[i] <<endl;
 }
 
 //
@@ -518,8 +544,6 @@ void User::display_accounts_status(vector<string> accountNames, vector<double> a
 // Output: updated structure user1
 void User::manageAccounts()
 {
-  vector <string> accountNames =  accounts.type;
-  vector <double> accountBalances =  accounts.value;
   cout << "Welcome to the Manage Accounts Screen.\n";
   string newAccountName;
   double newAccountBalance;
@@ -537,61 +561,58 @@ void User::manageAccounts()
         cin >> newAccountName;
         cout << "Please input Initial Account Balance : ";
         cin >> newAccountBalance;
-        accountNames.push_back(newAccountName);
-        accountBalances.push_back(newAccountBalance);
+        accounts.type.push_back(newAccountName);
+        accounts.value.push_back(newAccountBalance);
         cout << "\nNew Account has been created!\n";
         break;
 
       case 2: 
-        if(accountNames.size() == 0)
+        if(accounts.type.size() == 0)
         {
           cout << "Nothing to Delete!\n";
         }
         else
         {
           cout << "Please select the number in the list below next to the account name you would like to Delete.\n";
-          display_accounts_status(accountNames, accountBalances);
+          display_accounts_status();
           cout << i+1 << ". Exit to previous screen." << endl;
           cin >> changePos;
-          if(changePos > accountNames.size())
+          if(changePos > accounts.type.size())
           {
             cout << "Input integer does not link to any Account. Please try again!\n";
             break;
           }
-          accountNames.erase(accountNames.begin()+changePos-1);
-          accountBalances.erase(accountBalances.begin()+changePos-1);
+          accounts.type.erase(accounts.type.begin()+changePos-1);
+          accounts.value.erase(accounts.value.begin()+changePos-1);
         }
         break;
 
       case 3: 
-        if(accountNames.size() == 0)
+        if(accounts.type.size() == 0)
         {
           cout << "Nothing to Edit!\n";
         }
         else
         {
           cout << "Please select the number in the list below next to the account name you would like to Edit.\n";
-          display_accounts_status(accountNames, accountBalances);
+          display_accounts_status();
           cin >> changePos;
           cout << "Please enter updated Account Name : ";
           cin >> newAccountName;
           cout << "Please enter updated Account Balance : ";
           cin >> newAccountBalance;
-          accountNames[changePos-1] = newAccountName;
-          accountBalances[changePos-1] = newAccountBalance;
+          accounts.type[changePos-1] = newAccountName;
+          accounts.value[changePos-1] = newAccountBalance;
         }
         break;
 
         case 4:
-          display_accounts_status(accountNames, accountBalances);
+          display_accounts_status();
         break;  
 
       default: cout << "Invalid Input! Please choose a number from the Menu below.\n";       
     }
-    
   } while (userInput != 0);
-     accounts.type = accountNames;
-     accounts.value = accountBalances;
 }
 
 //
@@ -622,8 +643,8 @@ void User::transferAmount()
     cin >> toAccount;
     cout << "\nTransaction amount = HK$";
     cin >> transferAmount;
-     accounts.value[fromAccount-1] -= transferAmount;
-     accounts.value[toAccount-1] += transferAmount;
+    accounts.value[fromAccount-1] -= transferAmount;
+    accounts.value[toAccount-1] += transferAmount;
   }
   cout << "Transfer Successful!\n";
   cout << "\nCurrent Accounts Status\n";

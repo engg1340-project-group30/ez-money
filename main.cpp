@@ -99,9 +99,11 @@ int main()
     cout << "\nPlease enter the number next to your preferred option from the menu below: ";
     cin >> choice;
     currentUser.coordinate_input(choice);
+
   } while(choice != 0);
 
-  // write updated entries to file
-  currentUser.writeToFile();
+    // write updated entries to file
+    currentUser.writeToFile();
+
   return 0;
 }

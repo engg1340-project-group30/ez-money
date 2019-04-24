@@ -15,6 +15,7 @@ struct Category
 class User
 {
   public:
+    User();
     void readFromFile();
     void writeToFile();
     void display_expense_status();
@@ -30,6 +31,7 @@ class User
     void display_accounts_status();
     void manageAccounts();
     void transferAmount();
+    void statsMenu();
     void viewStats();
     void display_main_menu();
     void coordinate_input(int);

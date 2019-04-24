@@ -5,6 +5,11 @@
 #include "User.h"
 using namespace std;
 
+User::User()
+{
+  budget = 0.0;
+}
+
 //
 //Function to load values from username.txt into currentUser object
 void User::readFromFile()
@@ -136,7 +141,7 @@ void User::display_expense_status()
     cout << "\nStatus of all expenses is as follows\n";
   }
   else{
-    cout << "No income record to display! Please create a new record by entering 1 below.";
+    cout << "No expense record to display! Please create a new record by entering 1 below.";
   }
   for(int i=0; i<expense.type.size(); i++)
     cout << i+1 << ". " << expense.type[i] << " HK$" << expense.value[i] << endl;
@@ -158,7 +163,7 @@ void User::expenseMenu()
 
 //
 // Function to manage expense inputs
-// Function will also alert in case expenses are 75% or 100% of budget
+// Function will also alert in case expenses are 100% of budget
 // Input: structure user1
 // Output: updated structure user1
 //         Conditional Alerts
@@ -172,16 +177,19 @@ void User::manageExpense()
   unsigned int i=0;
   bool append = false;
   if(accounts.type.size()==0){
-    cout << "No Accounts found! Please create an account using 5 on the previous menu.";
+    cout << "No Accounts found! Please create an account using option 5 on the previous menu.";
     return;
   }
   else{
-    cout << "\nPlease select an account to deduct expense from.\n";
-    for(i=0; i<accounts.type.size(); i++){
-      cout << i+1 << ". " <<  accounts.type[i] << " HK$" << accounts.value[i] << endl;
-    }
+    cout << "\nPlease select an account to make a transaction from.\n";
+    display_accounts_status();
   }
   cin >> accountChoice;
+  if(accountChoice > accounts.type.size())
+  {
+    cout << "Input integer does not link to any Account. Try again!\n";
+    return;
+  }
   do
   {
     expenseMenu();
@@ -190,7 +198,7 @@ void User::manageExpense()
     {
       case 0 : break;
       case 1 :
-        cout << "Please enter a suitable expense type/category : ";
+        cout << "Please enter ONE WORD to categorise your expense : ";
         cin >> newCategory;
         cout << "Please enter the expense incurred : ";
         cin >> newExpense;
@@ -230,7 +238,7 @@ void User::manageExpense()
 
       case 2:
         if(expense.type.size() == 0){
-          cout << "No expense added!\n";
+          cout << "No expense added! To add an expense choose option 1 from the previous menu.\n";
           }
         else{
           cout << "Please select the number corresponding to the expense you would like to edit.\n";
@@ -245,7 +253,7 @@ void User::manageExpense()
             break;
           }
           accounts.value[accountChoice-1] += expense.value[userChoice-1];
-          cout << "Please enter updated Expense Category : ";
+          cout << "Please enter ONE WORD to update Expense Category : ";
           cin >> newCategory;
           cout << "Please enter updated expense : ";
           cin >> newExpense;
@@ -274,7 +282,7 @@ void User::manageExpense()
 
         case 3:
           if(expense.type.size() == 0){
-          cout << "No expense to delete!\n";
+          cout << "No expense to delete! To add an expense choose option 1 from the previous menu.\n";
           }
         else{
           cout << "Please select the number corresponding to the expense you would like to delete.\n";
@@ -294,10 +302,10 @@ void User::manageExpense()
         }
         break;
 
+    display_expense_status();
+
     default: cout << "Invalid input. Please choose a number from the menu below. \n";
     }
-
-    display_expense_status();
   } while (userInput!=0);
 }
 
@@ -309,7 +317,7 @@ void User::display_income_status()
     cout << "\nStatus of all Income Sources is as follows\n";
   }        
   else{
-    cout << "No income record to display! Please create a new record by entering 1 below.";
+    cout << "No income record to display! Please create a new record by entering option 1 below.";
   }
 
   for(int i=0; i<income.type.size(); i++){
@@ -344,16 +352,19 @@ void User::manageIncome()
   int userInput, choice, accountChoice;
   bool append = false;
   if(accounts.type.size()==0){
-    cout << "No Accounts found! Please create an account using 5 on the previous menu.";
+    cout << "No Accounts found! Please create an account using option 5 on the previous menu.";
     return;
   }
   else{
-    cout << "\nPlease select an account to add Income to.\n";
-    for(i=0; i<accounts.type.size(); i++){
-      cout << i+1 << ". " <<  accounts.type[i] << " HK$" << accounts.value[i] << endl;
-    }
+    cout << "\nPlease select an account to make transaction to.\n";
+    display_accounts_status();
   }
   cin >> accountChoice;
+  if(accountChoice > accounts.type.size())
+  {
+    cout << "Input integer does not link to any Account. Try again!\n";
+    return;
+  }
   do
   {
     incomeMenu();
@@ -362,9 +373,9 @@ void User::manageIncome()
     {
       case 0: break;
       case 1: 
-        cout << "Please enter suitable Income source : " ;
+        cout << "Please enter ONE WORD to categorise Income : " ;
         cin >> newSource;
-        cout << "Please input amount : ";
+        cout << "Please input Income amount : ";
         cin >> newIncome;
         
         for(i=0; i<income.type.size(); i++){
@@ -385,21 +396,20 @@ void User::manageIncome()
 
       case 2:
         if(income.type.size() == 0){
-          cout << "No income added!\n";
+          cout << "No income added! Please add Income using option 1 on the previous menu.\n";
         }
         else{
           cout << "Please select the number corresponding to the income you would like to edit.\n";
           for(i=0; i<income.type.size(); i++){
             cout << i+1 << ". " << income.type[i] << " HK$" << income.value[i]<< endl;
           }
-          
           cin >> choice;
           if(choice > income.type.size()){
             cout << "Input integer does not link to any income. Try again!\n";
             break;
           }
           accounts.value[accountChoice-1] -= income.value[choice-1];
-          cout << "Please enter updated Income Source : ";
+          cout << "Please enter ONE WORD to update Income Source : ";
           cin >> newSource;
           cout << "Please enter updated Income Amount : ";
           cin >> newIncome;
@@ -411,7 +421,7 @@ void User::manageIncome()
       
       case 3 :
         if(income.type.size()== 0){
-          cout << "Nothing to delete!\n";
+          cout << "No income added! Please add Income using option 1 on the previous menu.\n";
         }
         else {
           cout << "Please select the number corresponding to the income you would like to delete.\n";
@@ -430,10 +440,10 @@ void User::manageIncome()
         }
         break;
 
+        display_income_status();
+
         default: cout << "Invalid Input! Please choose a number from the Menu below. \n ";
     }
-    display_income_status();
-    
   } while (userInput!=0);
 }
 
@@ -442,10 +452,12 @@ void User::manageIncome()
 void User::viewRecordsMenu()
 {
   cout << "\nPlease enter the number next to your preferred option from the menu below.\n\n";
+  cout << "*************************************************" << endl;
   cout << "0. Exit to Main Menu." << endl;
   cout << "1. View Expense Records." << endl;
   cout << "2. View Income Records." << endl;
   cout << "3. View Current Accounts Status." << endl;
+  cout << "*************************************************" << endl;
 }
 
 //
@@ -455,20 +467,23 @@ void User::viewRecordsMenu()
 void User::viewRecords()
 {
   int choice; 
-  viewRecordsMenu();
-  cin >> choice;
-  switch(choice)
+  do
   {
-    case 0: return;
-    case 1: display_expense_status();
-      break;
-    case 2: display_income_status();
-      break;
-    case 3: display_accounts_status();
-      break;
-    default: 
-      cout << "Invalid Input! Please try again!";     
-  }
+    viewRecordsMenu();
+    cin >> choice;
+    switch(choice)
+    {
+      case 0: return;
+      case 1: display_expense_status();
+        break;
+      case 2: display_income_status();
+        break;
+      case 3: display_accounts_status();
+        break;
+      default: 
+        cout << "Invalid Input! Please try again!";     
+    }
+  } while (true);
 }
 
 //Function to print Budget Menu on the screen
@@ -511,7 +526,11 @@ void User::manageBudget()
         }
         cout << "Total amount spent : HK$" << sum << endl;
         cout << "Budget left : HK$" << budget-sum << endl;
-        cout << "% of Budget left : " << sum/budget*100  << "%" << endl; 
+        if(budget > 0)
+          cout << "% of Budget left : " << sum/budget*100  << "%" << endl; 
+        else
+          cout << "Please set a budget!" << endl;
+        
         sum=0;
         break;
     
@@ -570,7 +589,7 @@ void User::manageAccounts()
     {
       case 0: break;
       case 1:
-        cout << "Please input Account Name : ";
+        cout << "Please input ONE WORD for Account Name : ";
         cin >> newAccountName;
         cout << "Please input Initial Account Balance : ";
         cin >> newAccountBalance;
@@ -582,7 +601,7 @@ void User::manageAccounts()
       case 2: 
         if(accounts.type.size() == 0)
         {
-          cout << "Nothing to Delete!\n";
+          cout << "Nothing to Delete! Please add an account using option 1 on the previous menu.\n";
         }
         else
         {
@@ -603,14 +622,14 @@ void User::manageAccounts()
       case 3: 
         if(accounts.type.size() == 0)
         {
-          cout << "Nothing to Edit!\n";
+          cout << "Nothing to Edit! Please add an account using option 1 on the previous menu.\n";
         }
         else
         {
           cout << "Please select the number in the list below next to the account name you would like to Edit.\n";
           display_accounts_status();
           cin >> changePos;
-          cout << "Please enter updated Account Name : ";
+          cout << "Please enter ONE WORD to update Account Name : ";
           cin >> newAccountName;
           cout << "Please enter updated Account Balance : ";
           cin >> newAccountBalance;
@@ -650,7 +669,7 @@ void User::transferAmount()
     {
       cout << i+1 << ". " <<  accounts.type[i] << " HK$" <<  accounts.value[i] <<endl;
     }
-    cout << "\nTranfer FROM (Enter number from list above) : ";
+    cout << "\nTransfer FROM (Enter number from list above) : ";
     cin >> fromAccount;
     cout << "\nTransfer TO (Enter number from list above) : ";
     cin >> toAccount;
@@ -667,13 +686,54 @@ void User::transferAmount()
   }
 }
 
+// Function to print menu on Statistics screen
+void User::statsMenu(){
+  cout << "\nPlease enter the number next to your preferred option from the menu below.\n\n";
+  cout << "*************************************************" << endl;
+  cout << "0. Exit to Main Menu." << endl;
+  cout << "1. View Expense Statistics." << endl;
+  cout << "2. View Income Statistics." << endl;
+  cout << "*************************************************" << endl;
+}
+
 //
 // Function to manage income inputs
 // Input: structure user1
 // Output: updated structure user1
 void User::viewStats()
 {
-  cout << "This is the Statistics feature." << endl;
+  cout << "\nWelcome to the Statistics screen!\n" << endl;
+  int userInput;
+  double total_expense=0, total_income=0;
+  unsigned int i=0;
+
+  do
+  {
+    statsMenu();
+    cin >> userInput;
+    switch(userInput){
+      case 0: break;
+      case 1:
+        for(i=0; i<expense.value.size(); i++){
+          total_expense+=expense.value[i];
+        }
+        cout << "EXPENSES BY CATEGORY" << endl;
+        for(i=0; i<expense.type.size(); i++){
+          cout << expense.type[i] << " : " << (expense.value[i])/total_expense*100  << "%" << endl;
+        }
+        break;
+      case 2:
+        for(i=0; i<income.value.size(); i++){
+          total_expense+=income.value[i];
+        }
+        cout << "INCOME BY CATEGORY" << endl;
+        for(i=0; i<income.type.size(); i++){
+          cout << income.type[i] << " : " << (income.value[i])/total_expense*100 << "%" << endl;
+        }
+        break;
+    }
+  } while (userInput!=0);
+  
 }
 
 
@@ -684,18 +744,16 @@ void User::viewStats()
 
 void User::display_main_menu()
 {
-  //system("clear");
   cout << "\nPlease select the number next to your preferred option from the menu below.\n\n";
   cout << "*************************************************" << endl;
   cout << "0. Exit." << endl;
   cout << "1. Manage Expense." << endl;
   cout << "2. Manage Income." << endl;
-  cout << "3. View Previous Expenses and Incomes." << endl;
+  cout << "3. View User Records." << endl;
   cout << "4. Manage Monthly Budget." << endl;
   cout << "5. Manage Accounts." << endl;
   cout << "6. Transfer." << endl;
-  cout << "7. Manage Expense Reminders." << endl;
-  cout << "8. View Statistics of Previous Expenses." << endl;
+  cout << "7. View Statistics of Previous Expenses." << endl;
   cout << "*************************************************" << endl;
 }
 
@@ -722,9 +780,7 @@ void User::coordinate_input(int choice)
     break;
     case 6: transferAmount();
     break;
-    //case 7: reminders();
-    //break;
-    case 8: viewStats();
+    case 7: viewStats();
     break;
     default: cout << "Invalid Input! Please choose an option from the Main Menu." << endl;
   }

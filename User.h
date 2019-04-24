@@ -17,8 +17,10 @@ class User
   public:
     void readFromFile();
     void writeToFile();
+    void display_expense_status();
     void expenseMenu();
     void manageExpense();
+    void display_income_status();
     void incomeMenu();
     void manageIncome();
     void viewRecordsMenu();

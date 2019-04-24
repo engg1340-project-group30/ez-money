@@ -128,6 +128,20 @@ void User::writeToFile()
   fout << endl;
 }
 
+//
+// Function to display status of all expenses made by user
+void User::display_expense_status()
+{
+  if(expense.type.size()!=0){
+    cout << "\nStatus of all expenses is as follows\n";
+  }
+  else{
+    cout << "No income record to display! Please create a new record by entering 1 below.";
+  }
+  for(int i=0; i<expense.type.size(); i++)
+    cout << i+1 << ". " << expense.type[i] << " HK$" << expense.value[i] << endl;
+}
+
 //Function to provide user with choice of action in the expense feature
 //Input: none
 //Output: Expense menu for the user to choose from
@@ -281,17 +295,26 @@ void User::manageExpense()
         break;
 
     default: cout << "Invalid input. Please choose a number from the menu below. \n";
-    
     }
 
-    if(expense.type.size()!=0){
-      cout << "\nStatus of all expenses is as follows\n";
-    }
-
-    for(i=0; i<expense.type.size(); i++){
-      cout << i+1 << ". " << expense.type[i] << " HK$" << expense.value[i] << endl;
-    }
+    display_expense_status();
   } while (userInput!=0);
+}
+
+//
+// Function to display status of all incomes of by user
+void User::display_income_status()
+{
+  if(income.type.size()!=0){
+    cout << "\nStatus of all Income Sources is as follows\n";
+  }        
+  else{
+    cout << "No income record to display! Please create a new record by entering 1 below.";
+  }
+
+  for(int i=0; i<income.type.size(); i++){
+    cout << i+1 << ". " << income.type[i] << " HK$" << income.value[i] << endl;
+  }
 }
 
 //Function to provide user with choice of action in the income feature
@@ -409,17 +432,8 @@ void User::manageIncome()
 
         default: cout << "Invalid Input! Please choose a number from the Menu below. \n ";
     }
-
-    if(income.type.size()!=0){
-      cout << "\nStatus of all Income Sources is as follows\n";
-    }        
-    else{
-      cout << "No income record to display! Please create a new record by entering 1 below.";
-    }
-
-    for(i=0; i<income.type.size(); i++){
-      cout << i+1 << ". " << income.type[i] << " HK$" << income.value[i] << endl;
-    }
+    display_income_status();
+    
   } while (userInput!=0);
 }
 
@@ -432,7 +446,6 @@ void User::viewRecordsMenu()
   cout << "1. View Expense Records." << endl;
   cout << "2. View Income Records." << endl;
   cout << "3. View Current Accounts Status." << endl;
-  cout << "4. View Budget Status." << endl;
 }
 
 //
@@ -447,13 +460,13 @@ void User::viewRecords()
   switch(choice)
   {
     case 0: return;
-    case 1: 
+    case 1: display_expense_status();
       break;
-    case 2:
+    case 2: display_income_status();
       break;
     case 3: display_accounts_status();
       break;
-     default: 
+    default: 
       cout << "Invalid Input! Please try again!";     
   }
 }

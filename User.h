@@ -38,6 +38,8 @@ class User
 
     string username;
     double budget;
+    vector <string> expense_date;
+    vector <string> income_date;
     Category accounts, expense, income;
 };
 

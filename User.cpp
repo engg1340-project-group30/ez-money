@@ -192,6 +192,11 @@ void User::manageExpense()
   }
   do
   {
+    if(budget==0){
+      cout << "Please set budget using option 4 on the Main Menu below.\n";
+      return;
+    }
+
     expenseMenu();
     cin >> userInput;
     switch(userInput)
@@ -206,18 +211,18 @@ void User::manageExpense()
           cout << "\nNot sufficient balance in account! Try again.\n";
         }
         else{
-          for(i=0; i<expense.type.size(); i++){
+          /*for(i=0; i<expense.type.size(); i++){
             if(newCategory==expense.type[i]){
               expense.value[i] += newExpense;
               append=true;
               break;
             }
             append=false;
-          }
-          if(append==false){
+          }*/
+          //if(append==false){
             expense.type.push_back(newCategory);
             expense.value.push_back(newExpense);
-          }
+          //}
           
           for(i=0; i<expense.type.size(); i++){
             sum+=expense.value[i];
@@ -302,10 +307,9 @@ void User::manageExpense()
         }
         break;
 
-    display_expense_status();
-
     default: cout << "Invalid input. Please choose a number from the menu below. \n";
     }
+    display_expense_status();
   } while (userInput!=0);
 }
 
@@ -440,10 +444,11 @@ void User::manageIncome()
         }
         break;
 
-        display_income_status();
+        
 
         default: cout << "Invalid Input! Please choose a number from the Menu below. \n ";
     }
+    display_income_status();
   } while (userInput!=0);
 }
 
@@ -717,18 +722,29 @@ void User::viewStats()
         for(i=0; i<expense.value.size(); i++){
           total_expense+=expense.value[i];
         }
-        cout << "EXPENSES BY CATEGORY" << endl;
-        for(i=0; i<expense.type.size(); i++){
-          cout << expense.type[i] << " : " << (expense.value[i])/total_expense*100  << "%" << endl;
+        if(expense.type.size()>0){
+          cout << "EXPENSES BY CATEGORY" << endl;
+          for(i=0; i<expense.type.size(); i++){
+            cout << expense.type[i] << " : " << (expense.value[i])/total_expense*100  << "%" << endl;
+          }
+        }
+        else{
+          cout << "No Expense created! Please add expense using option 1 on the main menu.\n";
         }
         break;
+
       case 2:
         for(i=0; i<income.value.size(); i++){
           total_expense+=income.value[i];
         }
-        cout << "INCOME BY CATEGORY" << endl;
-        for(i=0; i<income.type.size(); i++){
-          cout << income.type[i] << " : " << (income.value[i])/total_expense*100 << "%" << endl;
+        if(income.type.size()>0){
+          cout << "INCOME BY CATEGORY" << endl;
+          for(i=0; i<income.type.size(); i++){
+            cout << income.type[i] << " : " << (income.value[i])/total_expense*100 << "%" << endl;
+          }
+        }
+        else{
+          cout << "No Income created! Please add income using option 2 on the main menu.\n";
         }
         break;
     }

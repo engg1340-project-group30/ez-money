@@ -1,18 +1,18 @@
-#finance-tracking-system
-##Group 30
-###Contributors
+# finance-tracking-system
+## Group 30
+### Contributors
 ..*Rhea Gupta 3035550731
 ..*Siddhant Bagri 3035551785
 
-##Problem Statement
-###Presenting EZ-Money (Inspired by Accounting system by TA Shumin)
+## Problem Statement
+### Presenting EZ-Money (Inspired by Accounting system by TA Shumin)
 
 Managing our finances is important for all of us. With all the transaction receipts, bills and accounts, money management can be a tedious and vexing task. Gone are the days of keeping log books and physical copies of financial transactions.  
 People have switched to technology to keep a track of their daily expenditures, incomes, and so much more. Group 30 has built a system which provides users with a simple platform to store and organize their expenses and incomes and gives statistical insights on them based on your monthly budget.
 
 ***
 
-##Features
+## Features
 1. Create and manage accounts for different modes of payment(Octopus Card, Credit Card, Bank Account, etc.)
 2. Create, Delete, and Edit Incomes and Expenses.
 3. View a record of previous transactions. This feature also accommodates filters for search
@@ -22,12 +22,12 @@ People have switched to technology to keep a track of their daily expenditures, 
 
 ***
 
-##Interface
+## Interface
 The program is menu driven with the ability to handle dynamic inputs. As such, there is no sample file input that could describe all the features. Hence, a screen recording of how we expect it to be used can be found on the link below: 
 
 *** 
 
-##Build and Execute
+## Build and Execute
 Please ensure you have the following installed on your system:
 ..*git 
 ..*g++ compiler 

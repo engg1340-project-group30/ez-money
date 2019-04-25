@@ -38,12 +38,46 @@ To use the system, simply follow the following steps
 
 `cd finance-tracking-system`
 
-3. Build the executable through the make command. Our default executable created is *main*
+3. Build the executable through the make command. Our default executable generated is *main*
 
 `make main`
 
-4. Execute the generated executable 
+4. Execute *main* 
 
 `./main`
 
 5. Follow instructions on the screen. You can refer to the link below to see how we expect the system to be used.
+
+## Technical Information
+### Data Structure
+Our implementation consists of a class which has all variables and member functions. 
+In main.cpp, we create an object of the class and make use of usernames stored in *usernames.txt* to handle multiple users. The username input by the user on the login screen becomes the current instance of the class.
+
+The variables of the class are
+- username, date- string
+- budget- double
+- accounts, expense, income- struct with vectors for date(string), category(string), and value(double).
+
+### File I/O
+The backend of our system uses files with .txt files. Every user has a file assigned to them which is named by their username. In addition, there is an admin *usernames.txt* file which stores these usernames.
+
+Example:
+`username.txt`
+Shumin
+Marco
+Lavender
+
+Then the files created for the users are
+- Shumin.txt
+- Marco.txt
+- Lavender.txt
+
+The program starts by loading values into the current user's object from the user's file. At the end of execution, the updated values are overwritten into the same user's file.
+
+## How does the system meet project requirements?
+1. Dynamic Memory Management- The use of a class and vectors allows for any number of users with their data being stored independently. This data can be of different sizes for different users and can be as large as required.
+2. File Input/Output- As described above, we use .txt files to load values into the attributes of the current object and write updated values into the user's file.
+3. Data Manipulation- The system can add, delete, and edit any record (Please refer to the features heading for details). Moreover, the Statistics feature processes the data to give meaningful insights to the user.
+4. Program Codes in Multiple Files- The code for the system is divided into 3 files which implement the class and ensure chronological execution. We have implemented a makefile to generate the executable to run the system.
+5. Proper Indentation and Naming Styles- Variables, files, and functions have been named based on their utility. This ensures better code readability and understanding. Coding the system was much simpler with these meaningful names.
+6. In code documentation- Comments have been included to describe the usage of every function. Further comments have been included where explanation is required. Variables have been given mnemonic names such that their utility is clear without comments.

@@ -1,8 +1,8 @@
 # finance-tracking-system
 ## ENGG 1340 Course Project Group 30
 ### Contributors
-..* Rhea Gupta 3035550731
-..* Siddhant Bagri 3035551785
+- Rhea Gupta 3035550731
+- Siddhant Bagri 3035551785
 
 ## Problem Statement
 ### Presenting EZ-Money (Inspired by Accounting system by TA Shumin)
@@ -25,9 +25,9 @@ The program is menu driven with the ability to handle dynamic inputs. As such, t
 
 ## Build and Execute
 Please ensure you have the following installed on your system (These are primarily for a Unix based system and in some cases, Windows):
-..* git `https://git-scm.com/book/en/v2/Getting-Started-Installing-Git`
-..* g++ compiler `https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=24&cad=rja&uact=8&ved=2ahUKEwiEmpnc9-rhAhVWZt4KHYdtDQAQFjAXegQIABAB&url=https%3A%2F%2Fwww.cs.odu.edu%2F~zeil%2Fcs250PreTest%2Flatest%2FPublic%2FinstallingACompiler%2F&usg=AOvVaw3Dxz2Flpp62H5v2zSfEs9I`
-..* Make `http://tldp.org/HOWTO/Software-Building-HOWTO-3.html`
+- git `https://git-scm.com/book/en/v2/Getting-Started-Installing-Git`
+- g++ compiler `https://linuxconfig.org/how-to-install-g-the-c-compiler-on-ubuntu-18-04-bionic-beaver-linux`
+- Make `http://tldp.org/HOWTO/Software-Building-HOWTO-3.html`
 
 To use the system, simply follow the following steps
 1. Clone this repository using the following command on your command line interface

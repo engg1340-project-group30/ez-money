@@ -255,19 +255,9 @@ void User::manageExpense()
           cout << "\nNot sufficient balance in account! Try again.\n";
         }
         else{
-          /*for(i=0; i<expense.type.size(); i++){
-            if(newCategory==expense.type[i]){
-              expense.value[i] += newExpense;
-              append=true;
-              break;
-            }
-            append=false;
-          }*/
-          //if(append==false){
-            expense.type.push_back(newCategory);
-            expense.value.push_back(newExpense);
-            expense.date.push_back(date);
-          //}
+          expense.type.push_back(newCategory);
+          expense.value.push_back(newExpense);
+          expense.date.push_back(date);
           
           for(i=0; i<expense.type.size(); i++){
             sum+=expense.value[i];
@@ -426,20 +416,10 @@ void User::manageIncome()
         cin >> newSource;
         cout << "Please input Income amount : ";
         cin >> newIncome;
+        income.type.push_back(newSource);
+        income.value.push_back(newIncome);
+        income.date.push_back(date);
         
-        for(i=0; i<income.type.size(); i++){
-          if(newSource==income.type[i]){
-            income.value[i]+=newIncome;
-            append=true;
-            break;
-          }
-          append=false;
-        }
-        if(append==false){
-          income.type.push_back(newSource);
-          income.value.push_back(newIncome);
-          income.date.push_back(date);
-        }
         cout << "\nNew Income has been added!\n";
         accounts.value[accountChoice-1] += newIncome;
         break;
@@ -512,12 +492,27 @@ void User::viewRecordsMenu()
 }
 
 //
+//Function to display filter options for View Records feature
+void User::filterRecordsMenu()
+{
+  cout << "\nPlease enter the number next to your preferred option from the menu below.\n\n";
+  cout << "*************************************************" << endl;
+  cout << "0. Exit to Main Menu." << endl;
+  cout << "1. Filter by Category." << endl;
+  cout << "2. Filter by Date." << endl;
+  cout << "*************************************************" << endl;
+}
+
+//
 // Function to view records with filters
 // Input: structure user1
 // Output: user's choice of records
 void User::viewRecords()
 {
-  int choice; 
+  int choice, filterchoice;
+  string type, filterDate;
+  char yesNo; 
+  unsigned int i=0;
   do
   {
     viewRecordsMenu();
@@ -525,11 +520,94 @@ void User::viewRecords()
     switch(choice)
     {
       case 0: return;
-      case 1: display_expense_status();
+      case 1: 
+        cout << "Would you like to filter expense records? (Y/N): ";
+        cin >> yesNo;
+        if(yesNo=='Y' || yesNo=='y'){
+          filterRecordsMenu();
+          cin >> filterchoice;
+          switch(filterchoice){
+            case 0 : break;
+            case 1 : 
+              cout << "Recorded Expense Categories are as follows\n";
+              for(i=0; i<expense.type.size(); i++){
+                cout << expense.type[i] << " " << endl;
+              }
+              cout << "Please enter ONE WORD to filter records by: ";
+              cin >> type;
+              cout << type << endl;
+              for(i=0; i<expense.type.size(); i++){
+                if(expense.type[i]==type){
+                  cout << expense.date[i] << " HK$" << expense.value[i] << endl;
+                }
+              }
+              break;
+            case 2 :
+              cout << "Recorded Expense Dates are as follows\n";
+              for(i=0; i<expense.date.size(); i++){
+                cout << expense.date[i] << " " << endl;
+              }
+              cout << "Please enter date to filter records by :";
+              cin >> filterDate;
+              cout << filterDate << endl;
+              for(i=0; i<expense.date.size(); i++){
+                if(expense.date[i]==filterDate){
+                  cout << expense.type[i] << " HK$" << expense.value[i] << endl;
+                }
+              }
+              break;
+            default : cout << "Invalid Input! Please try again!";
+          }
+        }
+        else{
+          display_expense_status();
+        }
         break;
-      case 2: display_income_status();
+      case 2: 
+        cout << "Would you like to filter income records? (Y/N)";
+        cin >> yesNo;
+        if(yesNo=='Y'|| yesNo=='y'){
+          filterRecordsMenu();
+          cin >> filterchoice;
+          switch(filterchoice){
+            case 0 : break;
+            case 1 : 
+              cout << "Recorded Income Categories are as follows\n";
+              for(i=0; i<income.type.size(); i++){
+                cout << income.type[i] << " " << endl;
+              }
+              cout << "Please enter ONE WORD to filter records by :";
+              cin >> type;
+              cout << type << endl;
+              for(i=0; i<income.type.size(); i++){
+                if(income.type[i]==type){
+                  cout << income.date[i] << " HK$" << income.value[i] << endl;
+                }
+              }
+              break;
+            case 2 :
+              cout << "Recorded Expense Dates are as follows\n";
+              for(i=0; i<income.date.size(); i++){
+                cout << income.date[i] << " " << endl;
+              }
+              cout << "Please enter date to filter records by :";
+              cin >> filterDate;
+              cout << filterDate << endl;
+              for(i=0; i<income.date.size(); i++){
+                if(income.date[i]==filterDate){
+                  cout << income.type[i] << " HK$" << income.value[i] << endl;;
+                }
+              }
+              break;
+            default : cout << "Invalid Input! Please try again!";
+          }
+        }
+        else{
+          display_income_status();
+        }
         break;
-      case 3: display_accounts_status();
+      case 3: 
+        display_accounts_status();
         break;
       default: 
         cout << "Invalid Input! Please try again!";     

@@ -26,6 +26,7 @@ class User
     void incomeMenu();
     void manageIncome();
     void viewRecordsMenu();
+    void filterRecordsMenu();
     void viewRecords();
     void manageBudget();
     void accountsMenu();
@@ -39,8 +40,6 @@ class User
 
     string username, date;
     double budget;
-    vector <string> expense_date;
-    vector <string> income_date;
     Category accounts, expense, income;
 };
 

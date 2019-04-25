@@ -18,7 +18,7 @@ int main()
   User currentUser;
   int createUser, choice;
   string name, username = "", date;
-  cout << "Please enter today's date: ";
+  cout << "Please enter today's date (DD/MM/YY): ";
   cin >> currentUser.date;
   cout << endl;
   loginScreen();

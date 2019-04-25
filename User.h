@@ -10,6 +10,7 @@ struct Category
 {
   vector <string> type;
   vector <double> value;
+  vector <string> date;
 };
 
 class User
@@ -36,7 +37,7 @@ class User
     void display_main_menu();
     void coordinate_input(int);
 
-    string username;
+    string username, date;
     double budget;
     vector <string> expense_date;
     vector <string> income_date;

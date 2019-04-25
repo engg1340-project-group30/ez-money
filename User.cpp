@@ -34,6 +34,17 @@ void User::readFromFile()
     if(line[i] == ' ')
     {
       word = line.substr(pos, (i-pos) );
+      accounts.date.push_back(word);
+      pos = i+1;
+    }
+  }
+  pos = 0;
+  getline(fin, line);
+  for(int i=0; i<line.length(); i++)
+  {
+    if(line[i] == ' ')
+    {
+      word = line.substr(pos, (i-pos) );
       accounts.type.push_back(word);
       pos = i+1;
     }
@@ -57,6 +68,17 @@ void User::readFromFile()
     if(line[i] == ' ')
     {
       word = line.substr(pos, (i-pos) );
+      expense.date.push_back(word);
+      pos = i+1;
+    }
+  }
+  pos = 0;
+  getline(fin, line);
+  for(int i=0; i<line.length(); i++)
+  {
+    if(line[i] == ' ')
+    {
+      word = line.substr(pos, (i-pos) );
       expense.type.push_back(word);
       pos = i+1;
     }
@@ -73,6 +95,17 @@ void User::readFromFile()
     }
   }
 
+  pos = 0;
+  getline(fin, line);
+  for(int i=0; i<line.length(); i++)
+  {
+    if(line[i] == ' ')
+    {
+      word = line.substr(pos, (i-pos) );
+      income.date.push_back(word);
+      pos = i+1;
+    }
+  }
   pos = 0;
   getline(fin, line);
   for(int i=0; i<line.length(); i++)
@@ -105,6 +138,10 @@ void User::writeToFile()
   ofstream fout;
   fout.open((username+".txt").c_str());
   fout << budget << "\n";
+  for(int i=0; i<accounts.date.size(); i++){
+    fout << accounts.date[i] << " ";
+  }
+  fout << endl;
   for(int i=0; i<accounts.type.size(); i++){
     fout << accounts.type[i] << " ";
   }
@@ -114,6 +151,10 @@ void User::writeToFile()
   }
   fout << endl;
 
+  for(int i=0; i<expense.date.size(); i++){
+    fout << expense.date[i] << " ";
+  }
+  fout << endl;
   for(int i=0; i<expense.type.size(); i++){
     fout << expense.type[i] << " ";
   }
@@ -123,6 +164,10 @@ void User::writeToFile()
   }
   fout << endl;
 
+  for(int i=0; i<income.date.size(); i++){
+    fout << income.date[i] << " ";
+  }
+  fout << endl;
   for(int i=0; i<income.type.size(); i++){
     fout << income.type[i] << " ";
   }
@@ -144,7 +189,7 @@ void User::display_expense_status()
     cout << "No expense record to display! Please create a new record by entering 1 below.";
   }
   for(int i=0; i<expense.type.size(); i++)
-    cout << i+1 << ". " << expense.type[i] << " HK$" << expense.value[i] << endl;
+    cout << i+1 << ". " << expense.date[i] << " " << expense.type[i] << " HK$" << expense.value[i] << endl;
 }
 
 //Function to provide user with choice of action in the expense feature
@@ -170,6 +215,10 @@ void User::expenseMenu()
 void User::manageExpense()
 {
   cout << "\nWelcome to the Manage Expense screen.\n" << endl;
+  if(budget==0){
+    cout << "Please set budget using option 4 on the Main Menu below.\n";
+    return;
+  }
   string newCategory;
   double newExpense;
   int userInput, userChoice, accountChoice;
@@ -192,11 +241,6 @@ void User::manageExpense()
   }
   do
   {
-    if(budget==0){
-      cout << "Please set budget using option 4 on the Main Menu below.\n";
-      return;
-    }
-
     expenseMenu();
     cin >> userInput;
     switch(userInput)
@@ -222,6 +266,7 @@ void User::manageExpense()
           //if(append==false){
             expense.type.push_back(newCategory);
             expense.value.push_back(newExpense);
+            expense.date.push_back(date);
           //}
           
           for(i=0; i<expense.type.size(); i++){
@@ -325,7 +370,7 @@ void User::display_income_status()
   }
 
   for(int i=0; i<income.type.size(); i++){
-    cout << i+1 << ". " << income.type[i] << " HK$" << income.value[i] << endl;
+    cout << i+1 << ". " << income.date[i] << " " << income.type[i] << " HK$" << income.value[i] << endl;
   }
 }
 
@@ -393,6 +438,7 @@ void User::manageIncome()
         if(append==false){
           income.type.push_back(newSource);
           income.value.push_back(newIncome);
+          income.date.push_back(date);
         }
         cout << "\nNew Income has been added!\n";
         accounts.value[accountChoice-1] += newIncome;
@@ -572,7 +618,7 @@ void User::display_accounts_status()
   }
     
   for (int i=0 ; i<accounts.type.size(); i++)
-    cout << i+1 << ". " << accounts.type[i] << " HK$" << accounts.value[i] <<endl;
+    cout << i+1 << ". " << accounts.date[i] << " " << accounts.type[i] << " HK$" << accounts.value[i] <<endl;
 }
 
 //
@@ -598,6 +644,7 @@ void User::manageAccounts()
         cin >> newAccountName;
         cout << "Please input Initial Account Balance : ";
         cin >> newAccountBalance;
+        accounts.date.push_back(date);
         accounts.type.push_back(newAccountName);
         accounts.value.push_back(newAccountBalance);
         cout << "\nNew Account has been created!\n";

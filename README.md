@@ -1,21 +1,53 @@
 #finance-tracking-system
+##Group 30
+###Contributors
+..*Rhea Gupta 3035550731
+..*Siddhant Bagri 3035551785
 
-EZ-Money (Inspired by Accounting system by TA Shumin)
+##Problem Statement
+###Presenting EZ-Money (Inspired by Accounting system by TA Shumin)
 
-ENGG1340 Course Project : Group 30
+Managing our finances is important for all of us. With all the transaction receipts, bills and accounts, money management can be a tedious and vexing task. Gone are the days of keeping log books and physical copies of financial transactions.  
+People have switched to technology to keep a track of their daily expenditures, incomes, and so much more. Group 30 has built a system which provides users with a simple platform to store and organize their expenses and incomes and gives statistical insights on them based on your monthly budget.
 
-Managing our finances is important for all of us. With all the transaction receipts, bills and accounts, money management can be a tedious and vexing task. Gone are the days of keeping log books and physical copies of financial transactions. People have switched to technology to keep a track of their wealth. Group 30 aims to build a financial system which provides users with a simple platform to record and organize their expenses and incomes and access their records with filters. The system also provides the functionality of statistics and budget.
+***
 
-FEATURES
+##Features
+1. Create and manage accounts for different modes of payment(Octopus Card, Credit Card, Bank Account, etc.)
+2. Create, Delete, and Edit Incomes and Expenses.
+3. View a record of previous transactions. This feature also accommodates filters for search
+4. Set a budget and we will alert you when you go overboard.
+5. Transfer money between accounts (eg. Recharge Octopus Card from Credit Card)
+6. Trying to cut down on expenditures? We will give you categorical statistics to give you insights on your means of expenditures. 
 
-The financial tracking system provides the user with the following functions:
-1) Add/delete income and expense records: each record contains the category of income, date , amount and account to which income is added or from which expense is deducted.
-2) Edit records at any time
-3) Store account information of the user
-4) View history of transactions and records: allows filters for search
-5) Budget entry: user can set a budget limit
-6) Alerts: allows alerts when 75% and 100% of budget is reached
-7) Reminders: set reminders for upcoming bill payments
-8) Statistics: displays statistical report of user expenses and income according to category; also provides a general statistical report for multiple users.
-9) Transfer between accounts (for example, add money to Octopus from Credit Card)
+***
 
+##Interface
+The program is menu driven with the ability to handle dynamic inputs. As such, there is no sample file input that could describe all the features. Hence, a screen recording of how we expect it to be used can be found on the link below: 
+
+*** 
+
+##Build and Execute
+Please ensure you have the following installed on your system:
+..*git 
+..*g++ compiler 
+..*Make 
+
+To use the system, simply follow the following steps
+1. Clone this repository using the following command on your command line interface
+
+`git clone https://github.com/engg1340-project-group30/finance-tracking-system.git`
+
+2. Go into the directory of the project
+
+`cd finance-tracking-system`
+
+3. Build the executable through the make command. Our default executable created is *main*
+
+`make main`
+
+4. Execute the generated executable 
+
+`./main`
+
+5. Follow instructions on the screen. You can refer to the link below to see how we expect the system to be used.

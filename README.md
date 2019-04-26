@@ -11,12 +11,16 @@ Managing our finances is important for all of us. With all the transaction recei
 People have switched to technology to keep a track of their daily expenditures, incomes, and so much more. Group 30 has built a system which provides users with a simple platform to store and organize their expenses and incomes and gives statistical insights on them based on your monthly budget.
 
 ## Features
-1. Create and manage accounts for different modes of payment(Octopus Card, Credit Card, Bank Account, etc.)
-2. Create, Delete, and Edit Incomes and Expenses.
-3. View a record of previous transactions. This feature also accommodates filters for search
-4. Set a budget and we will alert you when you go overboard.
-5. Transfer money between accounts (eg. Recharge Octopus Card from Credit Card)
-6. Trying to cut down on expenditures? We will give you categorical statistics to give you insights on your means of expenditures. 
+### Basic Requirements
+- Create and Manage **Accounts** for different modes of payment (Octopus Card, Credit Card, Bank Account, etc.)
+- Create, Delete, and Edit **Incomes** and **Expenses**
+- **View Previous Records** of transactions. This feature also accommodates **Filters** by date and categories
+- Set a **Budget** and we will **Alert** you when you go overboard
+- Trying to cut down on expenditures? We provide **Categorical Statistics** to give you insights on your means of expenditures
+- Store **Transaction Dates** and input transactions for different dates without much fuss
+### Additional Features
+- **Login Authentication** by Username 
+- **Transfer** between accounts (eg. Recharge Octopus Card from Credit Card)
 
 ## Interface
 The program is menu driven with the ability to handle dynamic inputs. As such, there is no sample file input that could describe all the features. Hence, a screen recording of how we expect it to be used can be found on the link below: 
@@ -25,11 +29,11 @@ The program is menu driven with the ability to handle dynamic inputs. As such, t
 
 ## Build and Execute
 Please ensure you have the following installed on your system (These are primarily for a Unix based system and in some cases, Windows):
-- git `https://git-scm.com/book/en/v2/Getting-Started-Installing-Git`
-- g++ compiler `https://linuxconfig.org/how-to-install-g-the-c-compiler-on-ubuntu-18-04-bionic-beaver-linux`
-- Make `http://tldp.org/HOWTO/Software-Building-HOWTO-3.html`
+- **git** `https://git-scm.com/book/en/v2/Getting-Started-Installing-Git`
+- **g++ compiler** `https://linuxconfig.org/how-to-install-g-the-c-compiler-on-ubuntu-18-04-bionic-beaver-linux`
+- **Make** `http://tldp.org/HOWTO/Software-Building-HOWTO-3.html`
 
-To use the system, simply follow the following steps
+**To use the system, simply follow the following steps**
 1. Clone this repository using the following command on your command line interface
 
 `git clone https://github.com/engg1340-project-group30/finance-tracking-system.git`
@@ -48,12 +52,14 @@ To use the system, simply follow the following steps
 
 5. Follow instructions on the screen. You can refer to the link below to see how we expect the system to be used.
 
+***
+
 ## Technical Information
 ### Data Structure
 Our implementation consists of a class which has all variables and member functions. 
 In main.cpp, we create an object of the class and make use of usernames stored in *usernames.txt* to handle multiple users. The username input by the user on the login screen becomes the current instance of the class.
 
-The variables of the class are
+The member variables of the class are
 - username, date- string
 - budget- double
 - accounts, expense, income- struct with vectors for date(string), category(string), and value(double).
@@ -63,21 +69,28 @@ The backend of our system uses files with .txt files. Every user has a file assi
 
 Example:
 `username.txt`
-Shumin
-Marco
-Lavender
+Shumin  
+Marco  
+Lavender  
 
 Then the files created for the users are
-- Shumin.txt
-- Marco.txt
-- Lavender.txt
+  * Shumin.txt
+  * Marco.txt
+  * Lavender.txt
 
 The program starts by loading values into the current user's object from the user's file. At the end of execution, the updated values are overwritten into the same user's file.
 
-## How does the system meet project requirements?
+## How does the System meet Project Requirements?
 1. Dynamic Memory Management- The use of a class and vectors allows for any number of users with their data being stored independently. This data can be of different sizes for different users and can be as large as required.
 2. File Input/Output- As described above, we use .txt files to load values into the attributes of the current object and write updated values into the user's file.
 3. Data Manipulation- The system can add, delete, and edit any record (Please refer to the features heading for details). Moreover, the Statistics feature processes the data to give meaningful insights to the user.
 4. Program Codes in Multiple Files- The code for the system is divided into 3 files which implement the class and ensure chronological execution. We have implemented a makefile to generate the executable to run the system.
 5. Proper Indentation and Naming Styles- Variables, files, and functions have been named based on their utility. This ensures better code readability and understanding. Coding the system was much simpler with these meaningful names.
 6. In code documentation- Comments have been included to describe the usage of every function. Further comments have been included where explanation is required. Variables have been given mnemonic names such that their utility is clear without comments.
+
+## Potential to Improve
+> Dynamism is a function of change
+> <cite>Hillary Clinton</cite>
+
+- The ideal system should be able to read Date of transaction from the user's computer. The user should not be required to input date manually but the C++ STL lacks this implementation. Our solution is to make use of **ctime**
+- Displaying graphs for Statistics for a better user experience. This can be implemented using Boost Python and matplotlib. There are other libraries for the same as well.

@@ -35,6 +35,7 @@ class User
     void transferAmount();
     void statsMenu();
     void viewStats();
+    void changeDate();
     void display_main_menu();
     void coordinate_input(int);
 

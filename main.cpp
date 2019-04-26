@@ -91,7 +91,8 @@ int main()
   fout.close();
 
   // load values into currentUser object
-  currentUser.readFromFile();
+  if(createUser != 2)
+    currentUser.readFromFile();
 
   cout << "\nHello, " << currentUser.username << "!" << endl;
 

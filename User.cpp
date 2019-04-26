@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <fstream>
 #include <cmath>
@@ -311,7 +312,7 @@ void User::manageExpense()
               cout << "\nBudget limit reached!" << endl;
             }
             else if(budget-sum < 0){
-              cout << "Alert! Budget has been exceeded by HK$" << abs(budget-newExpense) << endl; 
+              cout << "\nAlert! Budget has been exceeded by HK$" << abs(budget-newExpense) << endl; 
             }
             expense.type[userChoice-1] = newCategory;
             expense.value[userChoice-1] = newExpense;
@@ -529,11 +530,11 @@ void User::viewRecords()
           switch(filterchoice){
             case 0 : break;
             case 1 : 
-              cout << "Recorded Expense Categories are as follows\n";
+              cout << "\nRecorded Expense Categories are as follows\n";
               for(i=0; i<expense.type.size(); i++){
                 cout << expense.type[i] << " " << endl;
               }
-              cout << "Please enter ONE WORD to filter records by: ";
+              cout << "\nPlease enter ONE WORD to filter records by: ";
               cin >> type;
               cout << type << endl;
               for(i=0; i<expense.type.size(); i++){
@@ -543,11 +544,11 @@ void User::viewRecords()
               }
               break;
             case 2 :
-              cout << "Recorded Expense Dates are as follows\n";
+              cout << "\nRecorded Expense Dates are as follows\n";
               for(i=0; i<expense.date.size(); i++){
                 cout << expense.date[i] << " " << endl;
               }
-              cout << "Please enter date to filter records by :";
+              cout << "\nPlease enter date to filter records by :";
               cin >> filterDate;
               cout << filterDate << endl;
               for(i=0; i<expense.date.size(); i++){
@@ -572,11 +573,11 @@ void User::viewRecords()
           switch(filterchoice){
             case 0 : break;
             case 1 : 
-              cout << "Recorded Income Categories are as follows\n";
+              cout << "\nRecorded Income Categories are as follows\n";
               for(i=0; i<income.type.size(); i++){
                 cout << income.type[i] << " " << endl;
               }
-              cout << "Please enter ONE WORD to filter records by :";
+              cout << "\nPlease enter ONE WORD to filter records by :";
               cin >> type;
               cout << type << endl;
               for(i=0; i<income.type.size(); i++){
@@ -586,11 +587,11 @@ void User::viewRecords()
               }
               break;
             case 2 :
-              cout << "Recorded Expense Dates are as follows\n";
+              cout << "\nRecorded Expense Dates are as follows\n";
               for(i=0; i<income.date.size(); i++){
                 cout << income.date[i] << " " << endl;
               }
-              cout << "Please enter date to filter records by :";
+              cout << "\nPlease enter date to filter records by :";
               cin >> filterDate;
               cout << filterDate << endl;
               for(i=0; i<income.date.size(); i++){
@@ -656,7 +657,7 @@ void User::manageBudget()
         cout << "Total amount spent : HK$" << sum << endl;
         cout << "Budget left : HK$" << budget-sum << endl;
         if(budget > 0)
-          cout << "% of Budget left : " << sum/budget*100  << "%" << endl; 
+          cout << "% of Budget used : " <<fixed<<setprecision(2) << sum/budget*100  << "%" << endl; 
         else
           cout << "Please set a budget!" << endl;
         
@@ -832,11 +833,13 @@ void User::statsMenu(){
 // Output: updated structure user1
 void User::viewStats()
 {
-  cout << "\nWelcome to the Statistics screen!\n" << endl;
+  cout << "\nWelcome to the Statistics screen.\n" << endl;
   int userInput;
   double total_expense=0, total_income=0;
-  unsigned int i=0;
-
+  double sum=0;
+  bool flag=false;
+  unsigned int i=0, j=0;
+  vector <string> temp;
   do
   {
     statsMenu();
@@ -844,39 +847,74 @@ void User::viewStats()
     switch(userInput){
       case 0: break;
       case 1:
+        temp = expense.type;
         for(i=0; i<expense.value.size(); i++){
           total_expense+=expense.value[i];
         }
         if(expense.type.size()>0){
           cout << "EXPENSES BY CATEGORY" << endl;
-          for(i=0; i<expense.type.size(); i++){
-            cout << expense.type[i] << " : " << (expense.value[i])/total_expense*100  << "%" << endl;
+          for (i=0; i<temp.size(); i++)
+          {
+            if(temp[i] == "")
+              continue;
+            sum = expense.value[i];
+            for (j=i+1; j<temp.size(); j++)
+            {
+              if(temp[j] == temp[i])
+              {
+                sum += expense.value[j];
+                temp[j] = "";
+              }
+            }
+            cout << temp[i] << " : " << fixed << setprecision(2) << sum/total_expense*100 << "%" << endl;
           }
         }
-        else{
+        else
           cout << "No Expense created! Please add expense using option 1 on the main menu.\n";
-        }
+        total_expense = 0;
         break;
 
       case 2:
+        temp = income.type;
         for(i=0; i<income.value.size(); i++){
-          total_expense+=income.value[i];
+          total_income+=income.value[i];
         }
         if(income.type.size()>0){
-          cout << "INCOME BY CATEGORY" << endl;
-          for(i=0; i<income.type.size(); i++){
-            cout << income.type[i] << " : " << (income.value[i])/total_expense*100 << "%" << endl;
+          cout << "EXPENSES BY CATEGORY" << endl;
+          for (i=0; i<temp.size(); i++)
+          {
+            if(temp[i] == "")
+              continue;
+            sum = income.value[i];
+            for (j=i+1; j<temp.size(); j++)
+            {
+              if(temp[j] == temp[i])
+              {
+                sum += income.value[j];
+                temp[j] = "";
+              }
+            }
+            cout << temp[i] << " : " << fixed << setprecision(2) << sum/total_income*100 << "%" << endl;
           }
         }
         else{
           cout << "No Income created! Please add income using option 2 on the main menu.\n";
         }
+        total_income = 0;
         break;
     }
   } while (userInput!=0);
   
 }
 
+//
+//Function to change current instance of date
+void User::changeDate()
+{
+  cout << "\nWelcome to Change Date Screen.\n";
+  cout << "Please enter new date (DD/MM/YY) : ";
+  cin >> date;
+}
 
 //
 // Function to display all choices available (Main Menu)
@@ -895,6 +933,7 @@ void User::display_main_menu()
   cout << "5. Manage Accounts." << endl;
   cout << "6. Transfer." << endl;
   cout << "7. View Statistics of Previous Expenses." << endl;
+  cout << "8. Enter transactions for different Date." << endl;
   cout << "*************************************************" << endl;
 }
 
@@ -922,6 +961,8 @@ void User::coordinate_input(int choice)
     case 6: transferAmount();
     break;
     case 7: viewStats();
+    break;
+    case 8 : changeDate();
     break;
     default: cout << "Invalid Input! Please choose an option from the Main Menu." << endl;
   }

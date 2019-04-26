@@ -67,8 +67,7 @@ The member variables of the class are
 ### File I/O
 The backend of our system uses files with .txt files. Every user has a file assigned to them which is named by their username. In addition, there is an admin *usernames.txt* file which stores these usernames.
 
-Example:
-`username.txt`
+Example: `username.txt`  
 Shumin  
 Marco  
 Lavender  
@@ -89,8 +88,8 @@ The program starts by loading values into the current user's object from the use
 6. In code documentation- Comments have been included to describe the usage of every function. Further comments have been included where explanation is required. Variables have been given mnemonic names such that their utility is clear without comments.
 
 ## Potential to Improve
-> Dynamism is a function of change
-> <cite>Hillary Clinton</cite>
+> *Dynamism is a function of change*
+> <cite>- Hillary Clinton</cite>
 
 - The ideal system should be able to read Date of transaction from the user's computer. The user should not be required to input date manually but the C++ STL lacks this implementation. Our solution is to make use of **ctime**
 - Displaying graphs for Statistics for a better user experience. This can be implemented using Boost Python and matplotlib. There are other libraries for the same as well.

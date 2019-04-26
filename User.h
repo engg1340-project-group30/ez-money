@@ -17,6 +17,7 @@ class User
 {
   public:
     User();
+    bool validateDateInput();
     void readFromFile();
     void writeToFile();
     void display_expense_status();

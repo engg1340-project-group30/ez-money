@@ -20,10 +20,15 @@ int main()
   string name, username = "", date;
   cout << "Please enter today's date (DD/MM/YY): ";
   cin >> currentUser.date;
+  while(! currentUser.validateDateInput())
+  {
+    cout << "Please re-enter date in DD/MM/YY format: " ;
+    cin >> currentUser.date;
+  }
   cout << endl;
   loginScreen();
   cin >> createUser;
-  if(createUser != 3)
+  if(createUser == 1 || createUser == 2)
   {
     cout << "Please type your username and press Enter or Return : ";
     cin.ignore();
@@ -76,7 +81,9 @@ int main()
       cout << "Application successfully closed!\n";
       exit(1);
 
-    default: cout << "Invalid Input! Please try again." <<endl;   
+    default:
+      cout << "Invalid Input! Please try again." <<endl;   
+      exit(1);
   }
   // write updated username file
   fout.open("usernames.txt");

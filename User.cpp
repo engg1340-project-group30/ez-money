@@ -12,7 +12,57 @@ User::User()
 }
 
 //
-//Function to load values from username.txt into currentUser object
+// Function to validate date input by user 
+bool User::validateDateInput()
+{
+  int month[]={0,31,28,31,30,31,30,31,31,30,31,30,31}, dd, mm, yy, i;
+  if(date.length() != 8)
+  {
+    cout << "Incompatible length of date input.\n";
+    return false;
+  }
+  for(i=0; i<8; i++)
+  {
+    if(i == 2 || i == 5)
+    {
+      if(date[i] != '/')
+      {
+        cout << "Please use '/' as a seperator in date input.\n";
+        return false;
+      }
+      continue;
+    }
+    if(! (date[i] >= '0' && date[i] <='9') )
+    {
+      cout << "Date input accepts numbers only\n";
+      return false;
+    }
+  }
+  dd = stoi(date.substr(0,2));
+  mm = stoi(date.substr(3,2));
+  yy = stoi(date.substr(6,2));
+  if(yy < 0 || yy > 19)
+  {
+    cout << "Year entered is in the future!\n";
+    return false;
+  }
+  if(mm < 0 || mm > 12)
+  {
+    cout << "Incompatible month value in date input!\n";
+    return false;
+  }
+  if (((yy % 4 == 0) && (yy % 100 != 0)) || (yy % 400 == 0))
+    month[2] = 29;
+  if(dd < 0 || dd > month[mm])
+  {
+    cout << "Incompatible day of the month in date input\n";
+    return false;
+  }
+  return true;
+}
+
+//
+// Function to load values from username.txt into currentUser object
 void User::readFromFile()
 {
   int pos = 0;
@@ -560,8 +610,11 @@ void User::viewRecords()
             default : cout << "Invalid Input! Please try again!";
           }
         }
-        else{
+        else if (yesNo=='N' || yesNo=='n') {
           display_expense_status();
+        }
+        else {
+          cout << "Invalid input. Please try again!" << endl;
         }
         break;
       case 2: 
@@ -603,8 +656,11 @@ void User::viewRecords()
             default : cout << "Invalid Input! Please try again!";
           }
         }
-        else{
-          display_income_status();
+        else if (yesNo=='N' || yesNo=='n') {
+          display_expense_status();
+        }
+        else {
+          cout << "Invalid input. Please try again!" << endl;
         }
         break;
       case 3: 

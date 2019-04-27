@@ -34,9 +34,9 @@ The program is menu driven with the ability to handle dynamic inputs. We have pr
 `./main < sampleinputfile2.txt`  
 `./main`
 
-For further clarity, screen recordings demonstrating the features and input error handling can be found on our YouTube Channel. Follow the link below: 
-Feature Demonstration  [https://www.youtube.com/watch?v=O_6yr7iO81c&t=2s]  
-Input Error Handling  [https://youtu.be/m5zJYnp5DVE]  
+For further clarity, screen recordings demonstrating the features and input error handling can be found on our YouTube Channel. Follow the links below:  
+**Feature Demonstration** [https://www.youtube.com/watch?v=O_6yr7iO81c&t=2s]  
+**Input Error Handling** [https://youtu.be/m5zJYnp5DVE]  
 
 ***
 

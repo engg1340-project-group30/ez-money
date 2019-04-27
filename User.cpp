@@ -400,7 +400,6 @@ void User::manageExpense()
           for(i =0; i<expense.type.size(); i++){
             cout << i+1 << ". " << expense.type[i] << " HK$" << expense.value[i] << endl;
           }
-          cout << i+1 << ". Exit to previous screen." << endl;
           cin >> userChoice;
           if(userChoice > expense.type.size())
           {
@@ -527,7 +526,7 @@ void User::manageIncome()
         }
         accounts.value[accountChoice-1] += newIncome;
         break;
-      
+        
       case 3 :
         if(income.type.size()== 0){
           cout << "No income added! Please add Income using option 1 on the previous menu.\n";
@@ -537,7 +536,6 @@ void User::manageIncome()
           for(i=0; i<income.type.size(); i++){
             cout << i+1 << ". " << income.type[i] << " HK$" << income.value[i]<< endl;
           }
-          cout << i+1 << ". Exit to previous screen." << endl;
           cin >> choice;
           if(choice>income.type.size()){
             cout << "Input integer does not link to any Income. Try again!\n";
@@ -548,9 +546,6 @@ void User::manageIncome()
           income.value.erase(income.value.begin()+choice-1);
         }
         break;
-
-        
-
         default: cout << "Invalid Input! Please choose a number from the Menu below. \n ";
     }
     display_income_status();
@@ -826,7 +821,6 @@ void User::manageAccounts()
         {
           cout << "Please select the number in the list below next to the account name you would like to Delete.\n";
           display_accounts_status();
-          cout << i+1 << ". Exit to previous screen." << endl;
           cin >> changePos;
           if(changePos > accounts.type.size())
           {
@@ -972,7 +966,7 @@ void User::viewStats()
           total_income+=income.value[i];
         }
         if(income.type.size()>0){
-          cout << "EXPENSES BY CATEGORY" << endl;
+          cout << "INCOMES BY CATEGORY" << endl;
           for (i=0; i<temp.size(); i++)
           {
             if(temp[i] == "")

@@ -250,7 +250,7 @@ void User::display_expense_status()
     cout << "\nStatus of all expenses is as follows\n";
   }
   else{
-    cout << "No expense record to display! Please create a new record by entering 1 below.";
+    cout << "No expense record to display! Please create a new expense record first.";
   }
   for(int i=0; i<expense.type.size(); i++)
     cout << i+1 << ". " << expense.date[i] << " " << expense.type[i] << " HK$" << expense.value[i] << endl;
@@ -426,7 +426,7 @@ void User::display_income_status()
     cout << "\nStatus of all Income Sources is as follows\n";
   }        
   else{
-    cout << "No income record to display! Please create a new record by entering option 1 below.";
+    cout << "No income record to display! Please create a new income record first.";
   }
 
   for(int i=0; i<income.type.size(); i++){
@@ -663,7 +663,7 @@ void User::viewRecords()
               }
               break;
             case 2 :
-              cout << "\nRecorded Expense Dates are as follows\n";
+              cout << "\nRecorded Income Dates are as follows\n";
               for(i=0; i<income.date.size(); i++){
                 cout << income.date[i] << " " << endl;
               }
@@ -680,7 +680,7 @@ void User::viewRecords()
           }
         }
         else if (yesNo=='N' || yesNo=='n') {
-          display_expense_status();
+          display_income_status();
         }
         else {
           cout << "Invalid input. Please try again!" << endl;
@@ -772,7 +772,7 @@ void User::display_accounts_status()
   }
   else
   {
-    cout << "No Accounts to Display! Please Create an Account by entering 1 below.";
+    cout << "No Accounts to Display! Please Create an Account first.";
   }
     
   for (int i=0 ; i<accounts.type.size(); i++)

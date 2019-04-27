@@ -595,6 +595,11 @@ void User::viewRecords()
     {
       case 0: return;
       case 1: 
+        if(expense.type.size() == 0)
+        {
+          cout << "No expense record to display! Please create a new expense record first.";
+          break;
+        }
         cout << "Would you like to filter expense records? (Y/N): ";
         cin >> yesNo;
         if(yesNo=='Y' || yesNo=='y'){
@@ -641,6 +646,11 @@ void User::viewRecords()
         }
         break;
       case 2: 
+        if(income.type.size() == 0)
+        {
+          cout << "No income record to display! Please create a new income record first.";
+          break;
+        }
         cout << "Would you like to filter income records? (Y/N)";
         cin >> yesNo;
         if(yesNo=='Y'|| yesNo=='y'){

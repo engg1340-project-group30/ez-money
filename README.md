@@ -21,15 +21,28 @@ People have switched to technology to keep a track of their daily expenditures, 
 ### Additional Features
 - **Login Authentication** by Username 
 - **Transfer** between accounts (eg. Recharge Octopus Card from Credit Card)
+- Option to **Save or Discard Changes** at the end of execution
 
 ## Interface
-The program is menu driven with the ability to handle dynamic inputs. As such, there is no sample file input that could describe all the features. Hence, a screen recording of how we expect it to be used can be found on the link below: 
+The program is menu driven with the ability to handle dynamic inputs. We have provided 2 sample file inputs for input/output redirection:
+1. sampleinputfile1.txt: This file creates a username 'TestName1', and 2 each of Accounts, Expenses, and Incomes for the user. It then has inputs for the various features whose outputs can be redirected to another text file with the following commands  
+`make main`  
+`./main < sampleinputfile1.txt > sampleoutputfile.txt`
+
+2. sampleinputfile2.txt: This file creates a username 'TestName2', creates 2 accounts, and sets the budget to HK$500. You can then run the system again to test different functionalities. Follow the commands below:  
+`make main`  
+`./main < sampleinputfile2.txt`  
+`./main`
+
+For further clarity, screen recordings demonstrating the features and input error handling can be found on our YouTube Channel. Follow the link below: 
+Feature Demonstration  [https://www.youtube.com/watch?v=O_6yr7iO81c&t=2s]  
+Input Error Handling  [https://youtu.be/m5zJYnp5DVE]  
 
 ***
 
 ## Build and Execute
 Please ensure you have the following installed on your system (These are primarily for a Unix based system and in some cases, Windows):
-- **git** `https://git-scm.com/book/en/v2/Getting-Started-Installing-Git`
+- **git**  `https://git-scm.com/book/en/v2/Getting-Started-Installing-Git`
 - **g++ compiler** `https://linuxconfig.org/how-to-install-g-the-c-compiler-on-ubuntu-18-04-bionic-beaver-linux`
 - **Make** `http://tldp.org/HOWTO/Software-Building-HOWTO-3.html`
 
@@ -50,7 +63,7 @@ Please ensure you have the following installed on your system (These are primari
 
 `./main`
 
-5. Follow instructions on the screen. You can refer to the link below to see how we expect the system to be used.
+5. Follow instructions on the screen. You can refer to the YouTube Channel mentioned above for further clarity.
 
 ***
 

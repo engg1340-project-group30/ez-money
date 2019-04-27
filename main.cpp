@@ -4,6 +4,8 @@
 #include "User.h"
 using namespace std;
 
+//
+// Function to display the Login Screen
 void loginScreen()
 {
   cout << "Welcome to EZ-Money\n\n";
@@ -64,6 +66,10 @@ int main()
     break;
 
     case 2:
+      while(name == "" || !isalnum(name[0]) ){
+        cout << "Username cannot be empty or start with a space! Please re-enter a valid username: \n";
+        getline(cin, name);
+      }
       for(int i=0; i<usernames.size(); i++)
       {
         if(name == usernames[i])

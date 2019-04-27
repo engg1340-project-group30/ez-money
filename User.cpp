@@ -275,7 +275,6 @@ void User::manageExpense()
   int userInput, userChoice, accountChoice;
   double sum=0;
   unsigned int i=0;
-  bool append = false;
   if(accounts.type.size()==0){
     cout << "No Accounts found! Please create an account using option 5 on the previous menu.";
     return;
@@ -302,6 +301,10 @@ void User::manageExpense()
         cin >> newCategory;
         cout << "Please enter the expense incurred : ";
         cin >> newExpense;
+        if(newExpense<0){
+          cout << "\nInvalid Expense Value. Try again!\n";
+          break;
+        }
         if(newExpense > accounts.value[accountChoice-1]){
           cout << "\nNot sufficient balance in account! Try again.\n";
         }
@@ -348,6 +351,10 @@ void User::manageExpense()
           cin >> newCategory;
           cout << "Please enter updated expense : ";
           cin >> newExpense;
+          if(newExpense<0){
+            cout << "\nInvalid Expense Value. Try again!\n";
+            break;
+          }
           if(newExpense > accounts.value[accountChoice-1]){
             cout << "\nNot sufficient balance in account! Try again.\n";
           }
@@ -467,6 +474,10 @@ void User::manageIncome()
         cin >> newSource;
         cout << "Please input Income amount : ";
         cin >> newIncome;
+        if(newIncome<0){
+          cout << "\nInvalid Income Value. Try again!\n";
+          break;
+        }
         income.type.push_back(newSource);
         income.value.push_back(newIncome);
         income.date.push_back(date);
@@ -494,6 +505,10 @@ void User::manageIncome()
           cin >> newSource;
           cout << "Please enter updated Income Amount : ";
           cin >> newIncome;
+          if(newIncome<0){
+            cout << "\nInvalid Income Value. Try again!\n";
+            break;
+          }
           income.type[choice-1] = newSource;
           income.value[choice -1] = newIncome;
         }
@@ -779,6 +794,10 @@ void User::manageAccounts()
         cin >> newAccountName;
         cout << "Please input Initial Account Balance : ";
         cin >> newAccountBalance;
+        if(newAccountBalance<0){
+          cout << "\nInvalid Account Value. Try again!\n";
+          break;
+        }
         accounts.date.push_back(date);
         accounts.type.push_back(newAccountName);
         accounts.value.push_back(newAccountBalance);
@@ -820,6 +839,10 @@ void User::manageAccounts()
           cin >> newAccountName;
           cout << "Please enter updated Account Balance : ";
           cin >> newAccountBalance;
+          if(newAccountBalance<0){
+            cout << "\nInvalid Account Value. Try again!\n";
+            break;
+          }
           accounts.type[changePos-1] = newAccountName;
           accounts.value[changePos-1] = newAccountBalance;
         }

@@ -230,6 +230,19 @@ void User::writeToFile()
 }
 
 //
+// Function to save changes and exit application
+char User::saveChanges()
+{
+  char yesNo;
+  cout << "\nEnter 'Y' to save changes and any other key to discard all changes: ";
+  cin >> yesNo;
+  if(yesNo=='Y' || yesNo=='y')
+    return 'y';
+  else
+    return 'n';
+}
+
+//
 // Function to display status of all expenses made by user
 void User::display_expense_status()
 {
@@ -1025,7 +1038,8 @@ void User::coordinate_input(int choice)
 {
   switch(choice)
   {
-    case 0: cout << "Thank you for using the system.\nUntil next time! :)" << endl;
+    case 0:
+      // cout << "Thank you for using the system.\nUntil next time! :)" << endl;
     break;
     case 1: manageExpense();
     break;

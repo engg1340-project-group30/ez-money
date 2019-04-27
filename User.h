@@ -20,6 +20,7 @@ class User
     bool validateDateInput();
     void readFromFile();
     void writeToFile();
+    char saveChanges();
     void display_expense_status();
     void expenseMenu();
     void manageExpense();

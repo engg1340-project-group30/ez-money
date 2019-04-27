@@ -119,8 +119,11 @@ int main()
 
   } while(choice != 0);
 
-    // write updated entries to file
+  // write updated entries to file
+  char saveChanges = currentUser.saveChanges();
+  if(saveChanges=='y')
     currentUser.writeToFile();
 
+  cout << "\nThank you for using the system.\nUntil next time! :)" << endl;
   return 0;
 }
